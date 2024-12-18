@@ -5,15 +5,21 @@ VisualStudioVersion = 17.11.35431.28
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Alunos", "Alunos", "{3A13ECDE-BA32-4EF7-8D65-6FDA5E442916}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GestaoAcademica.Alunos.Domain", "src\GestaoAcademica.Alunos.Domain\GestaoAcademica.Alunos.Domain.csproj", "{E8281BEA-BB2A-48AA-9320-C4BAF0540E13}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GestaoAcademica.Alunos.Domain", "src\GestaoAcademica.Alunos.Domain\GestaoAcademica.Alunos.Domain.csproj", "{E8281BEA-BB2A-48AA-9320-C4BAF0540E13}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GestaoAcademica.Alunos.Application", "src\GestaoAcademica.Alunos.Application\GestaoAcademica.Alunos.Application.csproj", "{DB2E217D-582E-49CA-AD27-D7EF4C5D2CFB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GestaoAcademica.Alunos.Application", "src\GestaoAcademica.Alunos.Application\GestaoAcademica.Alunos.Application.csproj", "{DB2E217D-582E-49CA-AD27-D7EF4C5D2CFB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GestaoAcademica.Alunos.Data", "src\GestaoAcademica.Alunos.Data\GestaoAcademica.Alunos.Data.csproj", "{7E3E1299-67B9-494F-9560-9DE1728D2B9A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GestaoAcademica.Alunos.Data", "src\GestaoAcademica.Alunos.Data\GestaoAcademica.Alunos.Data.csproj", "{7E3E1299-67B9-494F-9560-9DE1728D2B9A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{0123DC47-C16E-436C-8082-8A9F5044CF2D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GestaoAcademica.Core", "src\GestaoAcademica.Core\GestaoAcademica.Core.csproj", "{0F520B61-A763-4F1A-9135-F985EB5B2F64}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GestaoAcademica.Core", "src\GestaoAcademica.Core\GestaoAcademica.Core.csproj", "{0F520B61-A763-4F1A-9135-F985EB5B2F64}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{CEBE62D4-29D5-4872-BD94-D1785B42B8B2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebApi", "WebApi", "{FC8D8220-759F-4E4B-BE91-30B3ED72E01C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GestaoAcademica.WebApi", "src\GestaoAcademica.WebApi\GestaoAcademica.WebApi.csproj", "{CB62D528-81B8-49AA-857D-86D47B046AB7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,15 +43,22 @@ Global
 		{0F520B61-A763-4F1A-9135-F985EB5B2F64}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0F520B61-A763-4F1A-9135-F985EB5B2F64}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0F520B61-A763-4F1A-9135-F985EB5B2F64}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CB62D528-81B8-49AA-857D-86D47B046AB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CB62D528-81B8-49AA-857D-86D47B046AB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CB62D528-81B8-49AA-857D-86D47B046AB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CB62D528-81B8-49AA-857D-86D47B046AB7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{3A13ECDE-BA32-4EF7-8D65-6FDA5E442916} = {CEBE62D4-29D5-4872-BD94-D1785B42B8B2}
 		{E8281BEA-BB2A-48AA-9320-C4BAF0540E13} = {3A13ECDE-BA32-4EF7-8D65-6FDA5E442916}
 		{DB2E217D-582E-49CA-AD27-D7EF4C5D2CFB} = {3A13ECDE-BA32-4EF7-8D65-6FDA5E442916}
 		{7E3E1299-67B9-494F-9560-9DE1728D2B9A} = {3A13ECDE-BA32-4EF7-8D65-6FDA5E442916}
+		{0123DC47-C16E-436C-8082-8A9F5044CF2D} = {CEBE62D4-29D5-4872-BD94-D1785B42B8B2}
 		{0F520B61-A763-4F1A-9135-F985EB5B2F64} = {0123DC47-C16E-436C-8082-8A9F5044CF2D}
+		{CB62D528-81B8-49AA-857D-86D47B046AB7} = {FC8D8220-759F-4E4B-BE91-30B3ED72E01C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BA17A6A9-9D1A-4D11-8BBE-1BE8E3D67754}

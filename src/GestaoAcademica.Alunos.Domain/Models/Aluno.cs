@@ -8,6 +8,7 @@ namespace GestaoAcademica.Alunos.Domain.Models
         public string Nome { get; private set; }
         public string NumeroDocumento { get; private set; }
         public DateTime DataNascimento { get; private set; }
+        public DateTime DataCadastro { get; private set; }
         public Endereco Endereco { get; private set; }
         public string NomePai { get; private set; }
         public string NomeMae { get; private set; }
@@ -26,16 +27,18 @@ namespace GestaoAcademica.Alunos.Domain.Models
             Nome = nome;
             NumeroDocumento = numeroDocumento;
             DataNascimento = dataNascimento;
+            DataCadastro = DateTime.Now;
             Endereco = endereco;
             NomePai = nomePai;
             NomeMae = nomeMae;
+            Status = TornarInativo(); // O aluno torna-se ativo, quando este é matriculado em algum curso.
 
             Validar();
         }
 
-        public void TornarAtivo() => Status = Status.Ativo;
+        public Status TornarAtivo() => Status = Status.Ativo;
 
-        public void TornarInativo() => Status = Status.Inativo;
+        public Status TornarInativo() => Status = Status.Inativo;
 
         public void Validar()
         {
