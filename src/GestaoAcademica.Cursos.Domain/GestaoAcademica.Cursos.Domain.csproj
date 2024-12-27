@@ -10,4 +10,9 @@
     <ProjectReference Include="..\GestaoAcademica.Core\GestaoAcademica.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Events\" />
+    <Folder Include="Services\" />
+  </ItemGroup>
+
 </Project>

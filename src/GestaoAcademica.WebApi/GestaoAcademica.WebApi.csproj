@@ -27,6 +27,7 @@
     <ProjectReference Include="..\GestaoAcademica.Alunos.Data\GestaoAcademica.Alunos.Data.csproj" />
     <ProjectReference Include="..\GestaoAcademica.Alunos.Domain\GestaoAcademica.Alunos.Domain.csproj" />
     <ProjectReference Include="..\GestaoAcademica.Core\GestaoAcademica.Core.csproj" />
+    <ProjectReference Include="..\GestaoAcademica.Cursos.Data\GestaoAcademica.Cursos.Data.csproj" />
   </ItemGroup>
 
 </Project>

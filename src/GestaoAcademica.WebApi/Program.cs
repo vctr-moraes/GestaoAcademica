@@ -1,5 +1,6 @@
 
 using GestaoAcademica.Alunos.Data;
+using GestaoAcademica.Cursos.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace GestaoAcademica.WebApi
@@ -11,6 +12,9 @@ namespace GestaoAcademica.WebApi
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddDbContext<AlunoContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+            builder.Services.AddDbContext<CursoContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();

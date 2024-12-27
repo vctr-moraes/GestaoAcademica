@@ -8,6 +8,7 @@ namespace GestaoAcademica.Cursos.Domain.Models
         public string Descricao { get; private set; }
         public string CargaHoraria { get; private set; }
         public string Professor { get; private set; }
+        public CursosDisciplinas CursosDisciplinas { get; private set; }
 
         protected Disciplina() { }
 
