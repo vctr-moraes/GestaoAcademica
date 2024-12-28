@@ -12,5 +12,7 @@ namespace GestaoAcademica.Alunos.Domain.Interfaces
         void Adicionar(Aluno aluno);
 
         void Atualizar(Aluno aluno);
+
+        void Excluir(Aluno professor);
     }
 }

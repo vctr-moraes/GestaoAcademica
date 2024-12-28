@@ -25,6 +25,11 @@ namespace GestaoAcademica.Alunos.Data.Repository
             _context.Alunos.Update(aluno);
         }
 
+        public void Excluir(Aluno aluno)
+        {
+            _context.Alunos.Remove(aluno);
+        }
+
         public async Task<Aluno> ObterPorId(Guid id)
         {
             return await _context.Alunos.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
