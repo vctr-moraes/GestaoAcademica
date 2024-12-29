@@ -1,47 +1,37 @@
-﻿using GestaoAcademica.Alunos.Domain.Models;
+﻿using GestaoAcademica.Professores.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace GestaoAcademica.Alunos.Data.Mappings
+namespace GestaoAcademica.Professores.Data.Mappings
 {
-    public class AlunoMapping : IEntityTypeConfiguration<Aluno>
+    public class ProfessorMapping : IEntityTypeConfiguration<Professor>
     {
-        public void Configure(EntityTypeBuilder<Aluno> builder)
+        public void Configure(EntityTypeBuilder<Professor> builder)
         {
-            builder.HasKey(a => a.Id);
+            builder.HasKey(p => p.Id);
 
             builder
-                .Property(a => a.Nome)
+                .Property(p => p.Nome)
                 .IsRequired()
                 .HasColumnType("varchar(100)");
 
             builder
-                .Property(a => a.NumeroDocumento)
+                .Property(p => p.NumeroDocumento)
                 .IsRequired()
                 .HasColumnType("varchar(100)");
 
             builder
-                .Property(a => a.DataNascimento)
+                .Property(p => p.DataNascimento)
                 .IsRequired()
                 .HasColumnType("date");
 
             builder
-                .Property(a => a.DataCadastro)
+                .Property(p => p.DataCadastro)
                 .IsRequired()
                 .HasColumnType("datetime");
 
             builder
-                .Property(a => a.NomePai)
-                .IsRequired()
-                .HasColumnType("varchar(100)");
-
-            builder
-                .Property(a => a.NomeMae)
-                .IsRequired()
-                .HasColumnType("varchar(100)");
-
-            builder
-                .OwnsOne(a => a.Endereco, endereco =>
+                .OwnsOne(p => p.Endereco, endereco =>
                 {
                     endereco
                         .Property(e => e.Logradouro)
@@ -74,7 +64,7 @@ namespace GestaoAcademica.Alunos.Data.Mappings
                         .HasColumnType("varchar(100)");
                 });
 
-            builder.ToTable("Alunos");
+            builder.ToTable("Professores");
         }
     }
 }
