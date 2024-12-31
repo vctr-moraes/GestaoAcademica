@@ -7,10 +7,11 @@ namespace GestaoAcademica.Cursos.Domain.Models
         public string Nome { get; private set; }
         public string Descricao { get; private set; }
         public string CargaHoraria { get; private set; }
-        public string Coordenador { get; private set; }
         public DateTime DataCriacao { get; private set; }
         public Grau Grau { get; private set; }
         public Modalidade Modalidade { get; private set; }
+        public Guid IdProfessorCoordenador { get; private set; }
+        public string NomeProfessorCoordenador { get; private set; }
 
         private readonly List<CursosDisciplinas> _cursosDisciplinas;
         public IReadOnlyCollection<CursosDisciplinas> CursosDisciplinas => _cursosDisciplinas;
@@ -44,7 +45,11 @@ namespace GestaoAcademica.Cursos.Domain.Models
             _cursosDisciplinas.Add(new CursosDisciplinas(this, disciplina));
         }
 
-        public void AtribuirProfessorCoordenador(string nomeProfessor) => Coordenador = nomeProfessor;
+        public void AtribuirProfessorCoordenador(Guid idProfessor, string nomeProfessor)
+        {
+            IdProfessorCoordenador = idProfessor;
+            NomeProfessorCoordenador = nomeProfessor;
+        }
 
         public void Validar()
         {

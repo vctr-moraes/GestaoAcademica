@@ -7,8 +7,9 @@ namespace GestaoAcademica.Cursos.Domain.Models
         public string Nome { get; private set; }
         public string Descricao { get; private set; }
         public string CargaHoraria { get; private set; }
-        public string Professor { get; private set; }
         public CursosDisciplinas CursosDisciplinas { get; private set; }
+        public Guid IdProfessor { get; private set; }
+        public string NomeProfessor { get; private set; }
 
         protected Disciplina() { }
 
@@ -21,10 +22,10 @@ namespace GestaoAcademica.Cursos.Domain.Models
             Validar();
         }
 
-        public void AtribuirProfessor(string professor)
+        public void AtribuirProfessor(Guid idProfessor, string nomeProfessor)
         {
-            // Posteriormente será utilizado o objeto Professor
-            Professor = professor;
+            IdProfessor = idProfessor;
+            NomeProfessor = nomeProfessor;
         }
 
         public void Validar()
