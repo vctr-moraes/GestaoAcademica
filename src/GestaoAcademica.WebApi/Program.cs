@@ -1,6 +1,7 @@
 using GestaoAcademica.Alunos.Data;
 using GestaoAcademica.Cursos.Data;
 using GestaoAcademica.Professores.Data;
+using GestaoAcademica.Turmas.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace GestaoAcademica.WebApi
@@ -18,6 +19,9 @@ namespace GestaoAcademica.WebApi
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             builder.Services.AddDbContext<ProfessorContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+            builder.Services.AddDbContext<TurmaContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();

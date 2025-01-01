@@ -26,7 +26,7 @@ namespace GestaoAcademica.Cursos.Data.Mappings
                 .HasColumnType("varchar(100)");
 
             builder
-                .Property(c => c.Coordenador)
+                .Property(c => c.NomeProfessorCoordenador)
                 .IsRequired(false)
                 .HasColumnType("varchar(100)");
 

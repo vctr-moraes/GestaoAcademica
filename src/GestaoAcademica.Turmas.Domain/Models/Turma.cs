@@ -6,6 +6,7 @@ namespace GestaoAcademica.Turmas.Domain.Models
     {
         public DateTime DataInicio { get; private set; }
         public DateTime DataEncerramento { get; private set; }
+        public StatusTurma StatusTurma { get; private set; }
         public Guid IdCurso { get; private set; }
         public string NomeCurso { get; private set; }
 
@@ -19,6 +20,7 @@ namespace GestaoAcademica.Turmas.Domain.Models
             DataInicio = dataInicio;
             IdCurso = idCurso;
             NomeCurso = nomeCurso;
+            StatusTurma = StatusTurma.Aberta;
 
             Validar();
         }

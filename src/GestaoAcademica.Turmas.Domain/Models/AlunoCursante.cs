@@ -9,7 +9,9 @@ namespace GestaoAcademica.Turmas.Domain.Models
         public DateTime DataEntrada { get; private set; }
         public DateTime DataSaida { get; private set; }
         public MotivoSaida MotivoSaida { get; private set; }
-        public Status Status { get; private set; }
+        public StatusAluno StatusAluno { get; private set; }
+        public Guid IdTurma { get; private set; }
+        public Turma Turma { get; set; }
 
         protected AlunoCursante() { }
 
@@ -18,7 +20,7 @@ namespace GestaoAcademica.Turmas.Domain.Models
             IdAluno = idAluno;
             NomeAluno = nomeAluno;
             DataEntrada = DateTime.Now;
-            Status = Status.Ativo;
+            StatusAluno = StatusAluno.Ativo;
 
             Validar();
         }
