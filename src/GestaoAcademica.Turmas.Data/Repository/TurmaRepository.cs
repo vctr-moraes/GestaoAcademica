@@ -40,6 +40,19 @@ namespace GestaoAcademica.Turmas.Data.Repository
             return await _context.Turmas.AsNoTracking().ToListAsync();
         }
 
+        public async Task<AlunoCursante> ObterAlunoCursantePorId(Guid id)
+        {
+            return await _context.AlunosCursantes.FirstOrDefaultAsync(x => x.Id == id);
+        }
+
+        public async Task<IEnumerable<AlunoCursante>> ObterAlunosCursantesPorTurma(Guid idTurma)
+        {
+            return await _context.AlunosCursantes
+                .AsNoTracking()
+                .Where(x => x.IdTurma == idTurma)
+                .ToListAsync();
+        }
+
         public void Dispose()
         {
             _context?.Dispose();

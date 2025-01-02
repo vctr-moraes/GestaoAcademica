@@ -2,6 +2,6 @@
 {
     public interface ITurmaService
     {
-        Task<bool> MatricularAluno(Guid idTurma, Guid idCurso, string nomeCurso, Guid idAluno, string nomeAluno);
+        Task<bool> MatricularAluno(Guid idTurma, Guid idAluno, string nomeAluno);
     }
 }

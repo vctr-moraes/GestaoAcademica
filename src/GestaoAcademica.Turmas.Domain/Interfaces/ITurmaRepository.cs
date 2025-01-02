@@ -14,5 +14,9 @@ namespace GestaoAcademica.Turmas.Domain.Interfaces
         void Atualizar(Turma turma);
 
         void Excluir(Turma turma);
+
+        Task<AlunoCursante> ObterAlunoCursantePorId(Guid id);
+
+        Task<IEnumerable<AlunoCursante>> ObterAlunosCursantesPorTurma(Guid idTurma);
     }
 }

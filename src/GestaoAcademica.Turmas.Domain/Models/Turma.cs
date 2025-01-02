@@ -25,6 +25,12 @@ namespace GestaoAcademica.Turmas.Domain.Models
             Validar();
         }
 
+        public void VincularAluno(Guid idAluno, string nomeAluno)
+        {
+            var aluno = new AlunoCursante(idAluno, nomeAluno);
+            _alunos.Add(aluno);
+        }
+
         public void Validar()
         {
             Validacoes.ValidarSeNulo(DataInicio, "O campo data início não pode estar vazio.");

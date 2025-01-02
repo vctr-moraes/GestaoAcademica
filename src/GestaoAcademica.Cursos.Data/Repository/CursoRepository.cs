@@ -59,7 +59,8 @@ namespace GestaoAcademica.Cursos.Data.Repository
         {
             return await _context.Disciplinas
                 .AsNoTracking()
-                .Where(x => x.CursosDisciplinas.CursoId == id).ToListAsync();
+                .Where(x => x.CursosDisciplinas.CursoId == id)
+                .ToListAsync();
         }
 
         public void Dispose()
