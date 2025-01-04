@@ -25,10 +25,22 @@ namespace GestaoAcademica.Turmas.Domain.Models
             Validar();
         }
 
-        public void VincularAluno(Guid idAluno, string nomeAluno)
+        public void MatricularAluno(Guid idAluno, string nomeAluno)
         {
             var aluno = new AlunoCursante(idAluno, nomeAluno);
             _alunos.Add(aluno);
+        }
+
+        public void TrancarMatriculaAluno(Guid idAluno)
+        {
+            var alunoCursante = _alunos.FirstOrDefault(x => x.IdAluno == idAluno);
+
+            if (alunoCursante == null)
+            {
+                throw new Exception("Aluno inexistente.");
+            }
+
+            _alunos.Remove(alunoCursante);
         }
 
         public void Validar()

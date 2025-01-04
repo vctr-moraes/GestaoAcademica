@@ -16,7 +16,16 @@ namespace GestaoAcademica.Turmas.Domain.Services
             if (!await ValidarAlunoCursanteExistente(idAluno)) return false;
 
             var turma = await _turmaRepository.ObterPorId(idTurma);
-            turma.VincularAluno(idAluno, nomeAluno);
+            turma.MatricularAluno(idAluno, nomeAluno);
+
+            _turmaRepository.Atualizar(turma);
+            return await _turmaRepository.UnitOfWork.Commit();
+        }
+
+        public async Task<bool> TrancarMatriculaAluno(Guid idTurma, Guid idAluno)
+        {
+            var turma = await _turmaRepository.ObterPorId(idTurma);
+            turma.TrancarMatriculaAluno(idAluno);
 
             _turmaRepository.Atualizar(turma);
             return await _turmaRepository.UnitOfWork.Commit();
