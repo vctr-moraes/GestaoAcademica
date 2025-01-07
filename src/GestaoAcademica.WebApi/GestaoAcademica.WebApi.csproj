@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -10,6 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MediatR" Version="12.4.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.0">
       <PrivateAssets>all</PrivateAssets>
@@ -27,6 +28,7 @@
     <ProjectReference Include="..\GestaoAcademica.Alunos.Data\GestaoAcademica.Alunos.Data.csproj" />
     <ProjectReference Include="..\GestaoAcademica.Alunos.Domain\GestaoAcademica.Alunos.Domain.csproj" />
     <ProjectReference Include="..\GestaoAcademica.Core\GestaoAcademica.Core.csproj" />
+    <ProjectReference Include="..\GestaoAcademica.Cursos.Application\GestaoAcademica.Cursos.Application.csproj" />
     <ProjectReference Include="..\GestaoAcademica.Cursos.Data\GestaoAcademica.Cursos.Data.csproj" />
     <ProjectReference Include="..\GestaoAcademica.Professores.Data\GestaoAcademica.Professores.Data.csproj" />
     <ProjectReference Include="..\GestaoAcademica.Turmas.Data\GestaoAcademica.Turmas.Data.csproj" />
