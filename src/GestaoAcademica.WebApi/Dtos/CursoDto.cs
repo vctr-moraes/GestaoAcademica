@@ -1,6 +1,4 @@
-﻿using GestaoAcademica.Cursos.Domain.Models;
-
-namespace GestaoAcademica.WebApi.Dtos
+﻿namespace GestaoAcademica.WebApi.Dtos
 {
     public class CursoDto
     {
