@@ -7,7 +7,7 @@ namespace GestaoAcademica.Alunos.Domain.Models
     {
         public string Nome { get; private set; }
         public string NumeroDocumento { get; private set; }
-        public DateTime DataNascimento { get; private set; }
+        public DateOnly DataNascimento { get; private set; }
         public DateTime DataCadastro { get; private set; }
         public Endereco Endereco { get; private set; }
         public string NomePai { get; private set; }
@@ -19,7 +19,7 @@ namespace GestaoAcademica.Alunos.Domain.Models
         public Aluno(
             string nome,
             string numeroDocumento,
-            DateTime dataNascimento,
+            DateOnly dataNascimento,
             Endereco endereco,
             string nomePai,
             string nomeMae)
