@@ -50,5 +50,21 @@ namespace GestaoAcademica.WebApi.Controllers
             var command = new VincularDisciplinaCommand(cursoId, disciplinaId);
             await _mediatorHandler.EnviarComando(command);
         }
+
+        [HttpPost]
+        [Route("atribuir-professor-coordenador")]
+        public async Task AtribuirProfessorCoordenador(Guid idCurso, Guid idProfessor, string nomeProfessor)
+        {
+            var command = new AtribuirProfessorCoordenadorCommand(idCurso, idProfessor, nomeProfessor);
+            await _mediatorHandler.EnviarComando(command);
+        }
+
+        [HttpPost]
+        [Route("atribuir-professor")]
+        public async Task AtribuirProfessor(Guid idDisciplina, Guid idProfessor, string nomeProfessor)
+        {
+            var command = new AtribuirProfessorCommand(idDisciplina, idProfessor, nomeProfessor);
+            await _mediatorHandler.EnviarComando(command);
+        }
     }
 }

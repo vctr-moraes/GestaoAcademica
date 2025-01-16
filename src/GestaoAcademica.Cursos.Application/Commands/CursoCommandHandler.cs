@@ -7,7 +7,9 @@ namespace GestaoAcademica.Cursos.Application.Commands
 {
     public class CursoCommandHandler : IRequestHandler<CadastrarCursoCommand, bool>,
                                        IRequestHandler<CadastrarDisciplinaCommand, bool>,
-                                       IRequestHandler<VincularDisciplinaCommand, bool>
+                                       IRequestHandler<VincularDisciplinaCommand, bool>,
+                                       IRequestHandler<AtribuirProfessorCoordenadorCommand, bool>,
+                                       IRequestHandler<AtribuirProfessorCommand, bool>
     {
         private readonly ICursoRepository _cursoRepository;
 
@@ -56,6 +58,32 @@ namespace GestaoAcademica.Cursos.Application.Commands
 
             _cursoRepository.AdicionarCursoDisciplina(cursoDisciplina);
             _cursoRepository.Atualizar(curso);
+            return await _cursoRepository.UnitOfWork.Commit();
+        }
+
+        public async Task<bool> Handle(AtribuirProfessorCoordenadorCommand message, CancellationToken cancellationToken)
+        {
+            var curso = await _cursoRepository.ObterPorId(message.IdCurso);
+
+            if (curso == null) return false;
+            if (curso.IdProfessorCoordenador == message.IdProfessor) return false;
+
+            curso.AtribuirProfessorCoordenador(message.IdProfessor, message.NomeProfessor);
+
+            _cursoRepository.Atualizar(curso);
+            return await _cursoRepository.UnitOfWork.Commit();
+        }
+
+        public async Task<bool> Handle(AtribuirProfessorCommand message, CancellationToken cancellationToken)
+        {
+            var disciplina = await _cursoRepository.ObterDisciplinaPorId(message.IdDisciplina);
+
+            if (disciplina == null) return false;
+            if (disciplina.IdProfessor == message.IdProfessor) return false;
+
+            disciplina.AtribuirProfessor(message.IdProfessor, message.NomeProfessor);
+
+            _cursoRepository.AtualizarDisciplina(disciplina);
             return await _cursoRepository.UnitOfWork.Commit();
         }
 
