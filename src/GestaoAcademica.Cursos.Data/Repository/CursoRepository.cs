@@ -27,7 +27,13 @@ namespace GestaoAcademica.Cursos.Data.Repository
 
         public async Task<Curso> ObterPorId(Guid id)
         {
-            return await _context.Cursos.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+            var curso = await _context.Cursos.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+
+            if (curso == null) return null;
+
+            await _context.Entry(curso).Collection(x => x.CursosDisciplinas).LoadAsync();
+
+            return curso;
         }
 
         public async Task<IEnumerable<Curso>> ObterTodos()
@@ -52,7 +58,7 @@ namespace GestaoAcademica.Cursos.Data.Repository
 
         public async Task<Disciplina> ObterDisciplinaPorId(Guid id)
         {
-            return await _context.Disciplinas.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+            return await _context.Disciplinas.FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<List<Disciplina>> ObterDisciplinasPorCurso(Guid id)
@@ -61,6 +67,11 @@ namespace GestaoAcademica.Cursos.Data.Repository
                 .AsNoTracking()
                 .Where(x => x.CursosDisciplinas.CursoId == id)
                 .ToListAsync();
+        }
+
+        public void AdicionarCursoDisciplina(CursosDisciplinas cursosDisciplinas)
+        {
+            _context.CursosDisciplinas.Add(cursosDisciplinas);
         }
 
         public void Dispose()

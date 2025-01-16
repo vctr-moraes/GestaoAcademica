@@ -22,5 +22,7 @@ namespace GestaoAcademica.Cursos.Domain.Interfaces
         void AtualizarDisciplina(Disciplina disciplina);
 
         void RemoverDisciplinaCurso(Guid cursoId, Guid disciplinaId);
+
+        void AdicionarCursoDisciplina(CursosDisciplinas cursosDisciplinas);
     }
 }

@@ -30,5 +30,25 @@ namespace GestaoAcademica.WebApi.Controllers
 
             await _mediatorHandler.EnviarComando(command);
         }
+
+        [HttpPost]
+        [Route("cadastrar-disciplina")]
+        public async Task CadastrarDisciplina(DisciplinaDto disciplinaDto)
+        {
+            var command = new CadastrarDisciplinaCommand(
+                disciplinaDto.Nome,
+                disciplinaDto.Descricao,
+                disciplinaDto.CargaHoraria);
+
+            await _mediatorHandler.EnviarComando(command);
+        }
+
+        [HttpPost]
+        [Route("vincular-disciplina")]
+        public async Task VincularDisciplina(Guid cursoId, Guid disciplinaId)
+        {
+            var command = new VincularDisciplinaCommand(cursoId, disciplinaId);
+            await _mediatorHandler.EnviarComando(command);
+        }
     }
 }

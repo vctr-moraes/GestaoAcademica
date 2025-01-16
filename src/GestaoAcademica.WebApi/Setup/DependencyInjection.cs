@@ -26,6 +26,8 @@ namespace GestaoAcademica.WebApi.Setup
             services.AddScoped<CursoContext>();
             services.AddScoped<ICursoRepository, CursoRepository>();
             services.AddScoped<IRequestHandler<CadastrarCursoCommand, bool>, CursoCommandHandler>();
+            services.AddScoped<IRequestHandler<CadastrarDisciplinaCommand, bool>, CursoCommandHandler>();
+            services.AddScoped<IRequestHandler<VincularDisciplinaCommand, bool>, CursoCommandHandler>();
 
             // Professores
             services.AddScoped<ProfessorContext>();

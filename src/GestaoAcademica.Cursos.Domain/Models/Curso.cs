@@ -40,9 +40,9 @@ namespace GestaoAcademica.Cursos.Domain.Models
             Validar();
         }
 
-        public void VincularDisciplina(Curso curso, Disciplina disciplina)
+        public void VincularDisciplina(CursosDisciplinas cursoDisciplina)
         {
-            _cursosDisciplinas.Add(new CursosDisciplinas(this, disciplina));
+            _cursosDisciplinas.Add(cursoDisciplina);
         }
 
         public void AtribuirProfessorCoordenador(Guid idProfessor, string nomeProfessor)
