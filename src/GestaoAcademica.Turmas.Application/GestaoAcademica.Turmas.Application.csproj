@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\GestaoAcademica.Core\GestaoAcademica.Core.csproj" />
+    <ProjectReference Include="..\GestaoAcademica.Turmas.Domain\GestaoAcademica.Turmas.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

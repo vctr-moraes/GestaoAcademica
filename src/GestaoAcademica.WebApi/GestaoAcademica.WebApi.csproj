@@ -32,6 +32,7 @@
     <ProjectReference Include="..\GestaoAcademica.Cursos.Data\GestaoAcademica.Cursos.Data.csproj" />
     <ProjectReference Include="..\GestaoAcademica.Professores.Application\GestaoAcademica.Professores.Application.csproj" />
     <ProjectReference Include="..\GestaoAcademica.Professores.Data\GestaoAcademica.Professores.Data.csproj" />
+    <ProjectReference Include="..\GestaoAcademica.Turmas.Application\GestaoAcademica.Turmas.Application.csproj" />
     <ProjectReference Include="..\GestaoAcademica.Turmas.Data\GestaoAcademica.Turmas.Data.csproj" />
   </ItemGroup>
 

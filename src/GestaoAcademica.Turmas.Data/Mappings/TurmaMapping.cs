@@ -17,6 +17,7 @@ namespace GestaoAcademica.Turmas.Data.Mappings
 
             builder
                 .Property(t => t.DataEncerramento)
+                .IsRequired()
                 .HasColumnType("date");
 
             builder
