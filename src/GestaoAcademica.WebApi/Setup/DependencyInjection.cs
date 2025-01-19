@@ -32,6 +32,7 @@ namespace GestaoAcademica.WebApi.Setup
             services.AddScoped<IRequestHandler<CadastrarCursoCommand, bool>, CursoCommandHandler>();
             services.AddScoped<IRequestHandler<CadastrarDisciplinaCommand, bool>, CursoCommandHandler>();
             services.AddScoped<IRequestHandler<VincularDisciplinaCommand, bool>, CursoCommandHandler>();
+            services.AddScoped<IRequestHandler<DesvincularDisciplinaCommand, bool>, CursoCommandHandler>();
             services.AddScoped<IRequestHandler<AtribuirProfessorCoordenadorCommand, bool>, CursoCommandHandler>();
             services.AddScoped<IRequestHandler<AtribuirProfessorCommand, bool>, CursoCommandHandler>();
 

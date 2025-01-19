@@ -52,6 +52,14 @@ namespace GestaoAcademica.WebApi.Controllers
         }
 
         [HttpPost]
+        [Route("desvincular-disciplina")]
+        public async Task DesvincularDisciplina(Guid cursoId, Guid disciplinaId)
+        {
+            var command = new DesvincularDisciplinaCommand(cursoId, disciplinaId);
+            await _mediatorHandler.EnviarComando(command);
+        }
+
+        [HttpPost]
         [Route("atribuir-professor-coordenador")]
         public async Task AtribuirProfessorCoordenador(Guid idCurso, Guid idProfessor, string nomeProfessor)
         {

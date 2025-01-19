@@ -23,6 +23,10 @@ namespace GestaoAcademica.Cursos.Domain.Interfaces
 
         void RemoverDisciplinaCurso(Guid cursoId, Guid disciplinaId);
 
+        Task<CursosDisciplinas> ObterCursoDisciplina(Guid cursoId, Guid disciplinaId);
+
         void AdicionarCursoDisciplina(CursosDisciplinas cursosDisciplinas);
+
+        void RemoverCursoDisciplina(CursosDisciplinas cursosDisciplinas);
     }
 }

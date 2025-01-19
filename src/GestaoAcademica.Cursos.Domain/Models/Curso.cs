@@ -45,6 +45,11 @@ namespace GestaoAcademica.Cursos.Domain.Models
             _cursosDisciplinas.Add(cursoDisciplina);
         }
 
+        public void DesvincularDisciplina(CursosDisciplinas cursoDisciplina)
+        {
+            _cursosDisciplinas.Remove(cursoDisciplina);
+        }
+
         public void AtribuirProfessorCoordenador(Guid idProfessor, string nomeProfessor)
         {
             IdProfessorCoordenador = idProfessor;

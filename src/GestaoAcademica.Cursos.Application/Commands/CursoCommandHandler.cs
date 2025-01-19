@@ -8,6 +8,7 @@ namespace GestaoAcademica.Cursos.Application.Commands
     public class CursoCommandHandler : IRequestHandler<CadastrarCursoCommand, bool>,
                                        IRequestHandler<CadastrarDisciplinaCommand, bool>,
                                        IRequestHandler<VincularDisciplinaCommand, bool>,
+                                       IRequestHandler<DesvincularDisciplinaCommand, bool>,
                                        IRequestHandler<AtribuirProfessorCoordenadorCommand, bool>,
                                        IRequestHandler<AtribuirProfessorCommand, bool>
     {
@@ -58,6 +59,22 @@ namespace GestaoAcademica.Cursos.Application.Commands
 
             _cursoRepository.AdicionarCursoDisciplina(cursoDisciplina);
             _cursoRepository.Atualizar(curso);
+            return await _cursoRepository.UnitOfWork.Commit();
+        }
+
+        public async Task<bool> Handle(DesvincularDisciplinaCommand message, CancellationToken cancellationToken)
+        {
+            var curso = await _cursoRepository.ObterPorId(message.CursoId);
+            var cursoDisciplina = await _cursoRepository.ObterCursoDisciplina(message.CursoId, message.DisciplinaId);
+
+            if (curso == null || cursoDisciplina == null) return false;
+            if (!curso.CursosDisciplinas.Any(x => x.DisciplinaId == message.DisciplinaId)) return false;
+
+            curso.DesvincularDisciplina(cursoDisciplina);
+
+            _cursoRepository.RemoverCursoDisciplina(cursoDisciplina);
+            _cursoRepository.Atualizar(curso);
+
             return await _cursoRepository.UnitOfWork.Commit();
         }
 

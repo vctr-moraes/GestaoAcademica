@@ -27,7 +27,7 @@ namespace GestaoAcademica.Cursos.Data.Repository
 
         public async Task<Curso> ObterPorId(Guid id)
         {
-            var curso = await _context.Cursos.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+            var curso = await _context.Cursos.FirstOrDefaultAsync(x => x.Id == id);
 
             if (curso == null) return null;
 
@@ -72,6 +72,19 @@ namespace GestaoAcademica.Cursos.Data.Repository
         public void AdicionarCursoDisciplina(CursosDisciplinas cursosDisciplinas)
         {
             _context.CursosDisciplinas.Add(cursosDisciplinas);
+        }
+
+        public async Task<CursosDisciplinas> ObterCursoDisciplina(Guid cursoId, Guid disciplinaId)
+        {
+            return await _context.CursosDisciplinas
+                .Include(x => x.Curso)
+                .Include(x => x.Disciplina)
+                .FirstOrDefaultAsync(x => x.CursoId == cursoId && x.DisciplinaId == disciplinaId);
+        }
+
+        public void RemoverCursoDisciplina(CursosDisciplinas cursosDisciplinas)
+        {
+            _context.CursosDisciplinas.Remove(cursosDisciplinas);
         }
 
         public void Dispose()
