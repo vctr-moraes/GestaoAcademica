@@ -56,6 +56,15 @@ namespace GestaoAcademica.Cursos.Domain.Models
             NomeProfessorCoordenador = nomeProfessor;
         }
 
+        public void DesvincularProfessorCoordenador(Guid idProfessor)
+        {
+            if (IdProfessorCoordenador == idProfessor)
+            {
+                IdProfessorCoordenador = Guid.Empty;
+                NomeProfessorCoordenador = string.Empty;
+            }
+        }
+
         public void Validar()
         {
             Validacoes.ValidarSeVazio(Nome, "O campo nome não pode estar vazio.");

@@ -10,7 +10,9 @@ namespace GestaoAcademica.Cursos.Application.Commands
                                        IRequestHandler<VincularDisciplinaCommand, bool>,
                                        IRequestHandler<DesvincularDisciplinaCommand, bool>,
                                        IRequestHandler<AtribuirProfessorCoordenadorCommand, bool>,
-                                       IRequestHandler<AtribuirProfessorCommand, bool>
+                                       IRequestHandler<DesvincularProfessorCoordenadorCommand, bool>,
+                                       IRequestHandler<AtribuirProfessorCommand, bool>,
+                                       IRequestHandler<DesvincularProfessorCommand, bool>
     {
         private readonly ICursoRepository _cursoRepository;
 
@@ -91,6 +93,19 @@ namespace GestaoAcademica.Cursos.Application.Commands
             return await _cursoRepository.UnitOfWork.Commit();
         }
 
+        public async Task<bool> Handle(DesvincularProfessorCoordenadorCommand message, CancellationToken cancellationToken)
+        {
+            var curso = await _cursoRepository.ObterPorId(message.IdCurso);
+
+            if (curso == null) return false;
+            if (curso.IdProfessorCoordenador != message.IdProfessor) return false;
+
+            curso.DesvincularProfessorCoordenador(message.IdProfessor);
+
+            _cursoRepository.Atualizar(curso);
+            return await _cursoRepository.UnitOfWork.Commit();
+        }
+
         public async Task<bool> Handle(AtribuirProfessorCommand message, CancellationToken cancellationToken)
         {
             var disciplina = await _cursoRepository.ObterDisciplinaPorId(message.IdDisciplina);
@@ -99,6 +114,19 @@ namespace GestaoAcademica.Cursos.Application.Commands
             if (disciplina.IdProfessor == message.IdProfessor) return false;
 
             disciplina.AtribuirProfessor(message.IdProfessor, message.NomeProfessor);
+
+            _cursoRepository.AtualizarDisciplina(disciplina);
+            return await _cursoRepository.UnitOfWork.Commit();
+        }
+
+        public async Task<bool> Handle(DesvincularProfessorCommand message, CancellationToken cancellationToken)
+        {
+            var disciplina = await _cursoRepository.ObterDisciplinaPorId(message.IdDisciplina);
+
+            if (disciplina == null) return false;
+            if (disciplina.IdProfessor != message.IdProfessor) return false;
+
+            disciplina.DesvincularProfessor(message.IdProfessor);
 
             _cursoRepository.AtualizarDisciplina(disciplina);
             return await _cursoRepository.UnitOfWork.Commit();
