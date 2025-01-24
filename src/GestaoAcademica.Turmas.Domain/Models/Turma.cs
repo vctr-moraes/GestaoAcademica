@@ -25,10 +25,9 @@ namespace GestaoAcademica.Turmas.Domain.Models
             Validar();
         }
 
-        public void MatricularAluno(Guid idAluno, string nomeAluno)
+        public void MatricularAluno(AlunoCursante alunoCursante)
         {
-            var aluno = new AlunoCursante(idAluno, nomeAluno);
-            _alunos.Add(aluno);
+            _alunos.Add(alunoCursante);
         }
 
         public void TrancarMatriculaAluno(Guid idAluno)

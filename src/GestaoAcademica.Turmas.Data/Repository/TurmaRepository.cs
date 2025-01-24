@@ -32,7 +32,7 @@ namespace GestaoAcademica.Turmas.Data.Repository
 
         public async Task<Turma> ObterPorId(Guid id)
         {
-            return await _context.Turmas.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+            return await _context.Turmas.Include(x => x.Alunos).FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<IEnumerable<Turma>> ObterTodos()
@@ -51,6 +51,11 @@ namespace GestaoAcademica.Turmas.Data.Repository
                 .AsNoTracking()
                 .Where(x => x.IdTurma == idTurma)
                 .ToListAsync();
+        }
+
+        public void AdicionarAlunoCursante(AlunoCursante alunoCursante)
+        {
+            _context.AlunosCursantes.Add(alunoCursante);
         }
 
         public void Dispose()

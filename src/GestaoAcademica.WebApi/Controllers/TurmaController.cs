@@ -24,5 +24,14 @@ namespace GestaoAcademica.WebApi.Controllers
 
             await _mediatorHandler.EnviarComando(command);
         }
+
+        [HttpPost]
+        [Route("matricular-aluno")]
+        public async Task MatricularAluno(Guid idTurma, Guid idAluno, string nomeAluno)
+        {
+            var command = new MatricularAlunoCommand(idTurma, idAluno, nomeAluno);
+
+            await _mediatorHandler.EnviarComando(command);
+        }
     }
 }

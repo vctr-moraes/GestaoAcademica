@@ -52,6 +52,7 @@ namespace GestaoAcademica.WebApi.Setup
             services.AddScoped<TurmaContext>();
             services.AddScoped<ITurmaRepository, TurmaRepository>();
             services.AddScoped<IRequestHandler<AbrirTurmaCommand, bool>, TurmaCommandHandler>();
+            services.AddScoped<IRequestHandler<MatricularAlunoCommand, bool>, TurmaCommandHandler>();
         }
     }
 }

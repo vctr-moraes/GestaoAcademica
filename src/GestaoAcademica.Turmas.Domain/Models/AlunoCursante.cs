@@ -15,8 +15,10 @@ namespace GestaoAcademica.Turmas.Domain.Models
 
         protected AlunoCursante() { }
 
-        public AlunoCursante(Guid idAluno, string nomeAluno)
+        public AlunoCursante(Turma turma, Guid idAluno, string nomeAluno)
         {
+            Turma = turma;
+            IdTurma = turma.Id;
             IdAluno = idAluno;
             NomeAluno = nomeAluno;
             DataEntrada = DateTime.Now;
@@ -27,9 +29,9 @@ namespace GestaoAcademica.Turmas.Domain.Models
 
         public void Validar()
         {
+            Validacoes.ValidarSeNulo(Turma, "O campo id da turma não pode estar vazio.");
             Validacoes.ValidarSeNulo(IdAluno, "O campo id do aluno não pode estar vazio.");
             Validacoes.ValidarSeVazio(NomeAluno, "O campo nome do aluno não pode estar vazio.");
-            Validacoes.ValidarSeNulo(DataEntrada, "O campo data de entrada não pode estar vazio.");
         }
     }
 }

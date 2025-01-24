@@ -18,5 +18,7 @@ namespace GestaoAcademica.Turmas.Domain.Interfaces
         Task<AlunoCursante> ObterAlunoCursantePorId(Guid id);
 
         Task<IEnumerable<AlunoCursante>> ObterAlunosCursantesPorTurma(Guid idTurma);
+
+        void AdicionarAlunoCursante(AlunoCursante alunoCursante);
     }
 }

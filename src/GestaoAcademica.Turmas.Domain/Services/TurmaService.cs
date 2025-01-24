@@ -1,4 +1,5 @@
 ﻿using GestaoAcademica.Turmas.Domain.Interfaces;
+using GestaoAcademica.Turmas.Domain.Models;
 
 namespace GestaoAcademica.Turmas.Domain.Services
 {
@@ -14,9 +15,8 @@ namespace GestaoAcademica.Turmas.Domain.Services
         public async Task<bool> MatricularAluno(Guid idTurma, Guid idAluno, string nomeAluno)
         {
             if (!await ValidarAlunoCursanteExistente(idAluno)) return false;
-
             var turma = await _turmaRepository.ObterPorId(idTurma);
-            turma.MatricularAluno(idAluno, nomeAluno);
+            turma.MatricularAluno(new AlunoCursante(turma, idAluno, nomeAluno));
 
             _turmaRepository.Atualizar(turma);
             return await _turmaRepository.UnitOfWork.Commit();
