@@ -28,5 +28,13 @@ namespace GestaoAcademica.WebApi.Controllers
 
             await _mediatorHandler.EnviarComando(command);
         }
+
+        [HttpDelete]
+        [Route("excluir-professor")]
+        public async Task ExcluirProfessor(Guid idProfessor)
+        {
+            var command = new ExcluirProfessorCommand(idProfessor);
+            await _mediatorHandler.EnviarComando(command);
+        }
     }
 }

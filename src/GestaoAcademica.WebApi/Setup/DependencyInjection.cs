@@ -42,11 +42,13 @@ namespace GestaoAcademica.WebApi.Setup
             services.AddScoped<ProfessorContext>();
             services.AddScoped<IProfessorRepository, ProfessorRepository>();
             services.AddScoped<IRequestHandler<CadastrarProfessorCommand, bool>, ProfessorCommandHandler>();
+            services.AddScoped<IRequestHandler<ExcluirProfessorCommand, bool>, ProfessorCommandHandler>();
 
             // Alunos
             services.AddScoped<AlunoContext>();
             services.AddScoped<IAlunoRepository, AlunoRepository>();
             services.AddScoped<IRequestHandler<CadastrarAlunoCommand, bool>, AlunoCommandHandler>();
+            services.AddScoped<IRequestHandler<ExcluirAlunoCommand, bool>, AlunoCommandHandler>();
 
             // Turma
             services.AddScoped<TurmaContext>();

@@ -5,7 +5,7 @@ using MediatR;
 
 namespace GestaoAcademica.Alunos.Application.Commands
 {
-    public class AlunoCommandHandler : IRequestHandler<CadastrarAlunoCommand, bool>
+    public class AlunoCommandHandler : IRequestHandler<CadastrarAlunoCommand, bool>, IRequestHandler<ExcluirAlunoCommand, bool>
     {
         private readonly IAlunoRepository _alunoRepository;
 
@@ -27,6 +27,17 @@ namespace GestaoAcademica.Alunos.Application.Commands
                 message.NomeMae);
 
             _alunoRepository.Adicionar(aluno);
+            return await _alunoRepository.UnitOfWork.Commit();
+        }
+
+        public async Task<bool> Handle(ExcluirAlunoCommand message, CancellationToken cancellationToken)
+        {
+            var aluno = await _alunoRepository.ObterPorId(message.IdAluno);
+
+            if (aluno == null) return false;
+            if (aluno.Status == Status.Ativo) return false;
+
+            _alunoRepository.Excluir(aluno);
             return await _alunoRepository.UnitOfWork.Commit();
         }
 

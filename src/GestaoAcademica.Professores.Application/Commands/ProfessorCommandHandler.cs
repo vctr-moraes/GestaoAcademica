@@ -5,7 +5,7 @@ using MediatR;
 
 namespace GestaoAcademica.Professores.Application.Commands
 {
-    public class ProfessorCommandHandler : IRequestHandler<CadastrarProfessorCommand, bool>
+    public class ProfessorCommandHandler : IRequestHandler<CadastrarProfessorCommand, bool>, IRequestHandler<ExcluirProfessorCommand, bool>
     {
         private readonly IProfessorRepository _professorRepository;
 
@@ -25,6 +25,17 @@ namespace GestaoAcademica.Professores.Application.Commands
                 message.Endereco);
 
             _professorRepository.Adicionar(professor);
+            return await _professorRepository.UnitOfWork.Commit();
+        }
+
+        public async Task<bool> Handle(ExcluirProfessorCommand message, CancellationToken cancellationToken)
+        {
+            var professor = await _professorRepository.ObterPorId(message.IdProfessor);
+
+            if (professor == null) return false;
+            if (professor.Status == Status.Ativo) return false;
+
+            _professorRepository.Excluir(professor);
             return await _professorRepository.UnitOfWork.Commit();
         }
 

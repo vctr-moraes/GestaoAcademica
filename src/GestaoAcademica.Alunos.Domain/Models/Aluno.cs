@@ -36,9 +36,9 @@ namespace GestaoAcademica.Alunos.Domain.Models
             Validar();
         }
 
-        public Status TornarAtivo() => Status = Status.Ativo;
+        public Status TornarAtivo() => Status = Status.Ativo; // Aluno cursante.
 
-        public Status TornarInativo() => Status = Status.Inativo;
+        public Status TornarInativo() => Status = Status.Inativo; // Aluno não cursante.
 
         public void Validar()
         {
