@@ -12,7 +12,9 @@ namespace GestaoAcademica.Cursos.Application.Commands
                                        IRequestHandler<AtribuirProfessorCoordenadorCommand, bool>,
                                        IRequestHandler<DesvincularProfessorCoordenadorCommand, bool>,
                                        IRequestHandler<AtribuirProfessorCommand, bool>,
-                                       IRequestHandler<DesvincularProfessorCommand, bool>
+                                       IRequestHandler<DesvincularProfessorCommand, bool>,
+                                       IRequestHandler<ExcluirCursoCommand, bool>,
+                                       IRequestHandler<ExcluirDisciplinaCommand, bool>
     {
         private readonly ICursoRepository _cursoRepository;
 
@@ -37,6 +39,16 @@ namespace GestaoAcademica.Cursos.Application.Commands
             return await _cursoRepository.UnitOfWork.Commit();
         }
 
+        public async Task<bool> Handle(ExcluirCursoCommand message, CancellationToken cancellationToken)
+        {
+            var curso = await _cursoRepository.ObterPorId(message.CursoId);
+
+            if (curso == null) return false;
+
+            _cursoRepository.Excluir(curso);
+            return await _cursoRepository.UnitOfWork.Commit();
+        }
+
         public async Task<bool> Handle(CadastrarDisciplinaCommand message, CancellationToken cancellationToken)
         {
             if (!ValidarComando(message)) return false;
@@ -44,6 +56,17 @@ namespace GestaoAcademica.Cursos.Application.Commands
             var disciplina = new Disciplina(message.Nome, message.Descricao, message.CargaHoraria);
 
             _cursoRepository.AdicionarDisciplina(disciplina);
+            return await _cursoRepository.UnitOfWork.Commit();
+        }
+
+        public async Task<bool> Handle(ExcluirDisciplinaCommand message, CancellationToken cancellationToken)
+        {
+            var disciplina = await _cursoRepository.ObterDisciplinaPorId(message.DisciplinaId);
+
+            if (disciplina == null) return false;
+            if (disciplina.CursosDisciplinas?.DisciplinaId == message.DisciplinaId) return false;
+
+            _cursoRepository.ExcluirDisciplina(disciplina);
             return await _cursoRepository.UnitOfWork.Commit();
         }
 

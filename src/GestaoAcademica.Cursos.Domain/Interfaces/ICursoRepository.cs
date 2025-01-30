@@ -13,6 +13,8 @@ namespace GestaoAcademica.Cursos.Domain.Interfaces
 
         void Atualizar(Curso curso);
 
+        void Excluir(Curso curso);
+
         Task<Disciplina> ObterDisciplinaPorId(Guid id);
 
         Task<List<Disciplina>> ObterDisciplinasPorCurso(Guid id);
@@ -20,6 +22,8 @@ namespace GestaoAcademica.Cursos.Domain.Interfaces
         void AdicionarDisciplina(Disciplina disciplina);
 
         void AtualizarDisciplina(Disciplina disciplina);
+
+        void ExcluirDisciplina(Disciplina disciplina);
 
         void RemoverDisciplinaCurso(Guid cursoId, Guid disciplinaId);
 

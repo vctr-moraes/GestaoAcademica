@@ -25,6 +25,11 @@ namespace GestaoAcademica.Cursos.Data.Repository
             _context.Cursos.Update(curso);
         }
 
+        public void Excluir(Curso curso)
+        {
+            _context.Remove(curso);
+        }
+
         public async Task<Curso> ObterPorId(Guid id)
         {
             var curso = await _context.Cursos.FirstOrDefaultAsync(x => x.Id == id);
@@ -51,6 +56,11 @@ namespace GestaoAcademica.Cursos.Data.Repository
             _context.Disciplinas.Update(disciplina);
         }
 
+        public void ExcluirDisciplina(Disciplina disciplina)
+        {
+            _context.Disciplinas.Remove(disciplina);
+        }
+
         public void RemoverDisciplinaCurso(Guid cursoId, Guid disciplinaId)
         {
             throw new NotImplementedException();
@@ -58,7 +68,7 @@ namespace GestaoAcademica.Cursos.Data.Repository
 
         public async Task<Disciplina> ObterDisciplinaPorId(Guid id)
         {
-            return await _context.Disciplinas.FirstOrDefaultAsync(x => x.Id == id);
+            return await _context.Disciplinas.Include(x => x.CursosDisciplinas.Curso).FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<List<Disciplina>> ObterDisciplinasPorCurso(Guid id)

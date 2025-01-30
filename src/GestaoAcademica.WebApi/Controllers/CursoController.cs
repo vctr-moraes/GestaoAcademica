@@ -31,6 +31,14 @@ namespace GestaoAcademica.WebApi.Controllers
             await _mediatorHandler.EnviarComando(command);
         }
 
+        [HttpDelete]
+        [Route("excluir-curso")]
+        public async Task ExcluirCurso(Guid cursoId)
+        {
+            var command = new ExcluirCursoCommand(cursoId);
+            await _mediatorHandler.EnviarComando(command);
+        }
+
         [HttpPost]
         [Route("cadastrar-disciplina")]
         public async Task CadastrarDisciplina(DisciplinaDto disciplinaDto)
@@ -40,6 +48,14 @@ namespace GestaoAcademica.WebApi.Controllers
                 disciplinaDto.Descricao,
                 disciplinaDto.CargaHoraria);
 
+            await _mediatorHandler.EnviarComando(command);
+        }
+
+        [HttpDelete]
+        [Route("excluir-disciplina")]
+        public async Task ExcluirDisciplina(Guid disciplinaId)
+        {
+            var command = new ExcluirDisciplinaCommand(disciplinaId);
             await _mediatorHandler.EnviarComando(command);
         }
 
