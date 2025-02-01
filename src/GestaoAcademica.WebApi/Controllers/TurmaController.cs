@@ -1,5 +1,7 @@
 ﻿using GestaoAcademica.Core.Communication.Mediator;
 using GestaoAcademica.Turmas.Application.Commands;
+using GestaoAcademica.Turmas.Application.Queries;
+using GestaoAcademica.Turmas.Application.Queries.Dtos;
 using GestaoAcademica.WebApi.Dtos;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,10 +12,12 @@ namespace GestaoAcademica.WebApi.Controllers
     public class TurmaController : ControllerBase
     {
         private readonly IMediatorHandler _mediatorHandler;
+        private readonly ITurmaQueries _turmaQueries;
 
-        public TurmaController(IMediatorHandler mediatorHandler)
+        public TurmaController(IMediatorHandler mediatorHandler, ITurmaQueries turmaQueries)
         {
             _mediatorHandler = mediatorHandler;
+            _turmaQueries = turmaQueries;
         }
 
         [HttpPost]
@@ -32,6 +36,13 @@ namespace GestaoAcademica.WebApi.Controllers
             var command = new MatricularAlunoCommand(idTurma, idAluno, nomeAluno);
 
             await _mediatorHandler.EnviarComando(command);
+        }
+
+        [HttpGet]
+        [Route("obter-turma")]
+        public async Task<TurmaAlunosDto> ObterTurma(Guid idTurma)
+        {
+            return await _turmaQueries.ObterTurmaPorId(idTurma);
         }
     }
 }

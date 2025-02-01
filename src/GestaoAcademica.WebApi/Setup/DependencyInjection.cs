@@ -12,6 +12,7 @@ using GestaoAcademica.Professores.Data;
 using GestaoAcademica.Professores.Data.Repository;
 using GestaoAcademica.Professores.Domain.Interfaces;
 using GestaoAcademica.Turmas.Application.Commands;
+using GestaoAcademica.Turmas.Application.Queries;
 using GestaoAcademica.Turmas.Data;
 using GestaoAcademica.Turmas.Data.Repository;
 using GestaoAcademica.Turmas.Domain.Interfaces;
@@ -57,6 +58,7 @@ namespace GestaoAcademica.WebApi.Setup
             services.AddScoped<ITurmaRepository, TurmaRepository>();
             services.AddScoped<IRequestHandler<AbrirTurmaCommand, bool>, TurmaCommandHandler>();
             services.AddScoped<IRequestHandler<MatricularAlunoCommand, bool>, TurmaCommandHandler>();
+            services.AddScoped<ITurmaQueries, TurmaQueries>();
         }
     }
 }

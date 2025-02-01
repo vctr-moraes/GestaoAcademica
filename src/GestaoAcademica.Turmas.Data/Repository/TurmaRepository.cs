@@ -32,7 +32,13 @@ namespace GestaoAcademica.Turmas.Data.Repository
 
         public async Task<Turma> ObterPorId(Guid id)
         {
-            return await _context.Turmas.Include(x => x.Alunos).FirstOrDefaultAsync(x => x.Id == id);
+            var turma = await _context.Turmas.Include(x => x.Alunos).FirstOrDefaultAsync(x => x.Id == id);
+
+            if (turma == null) return null;
+
+            await _context.Entry(turma).Collection(x => x.Alunos).LoadAsync();
+
+            return turma;
         }
 
         public async Task<IEnumerable<Turma>> ObterTodos()
