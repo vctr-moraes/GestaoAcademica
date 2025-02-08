@@ -46,6 +46,19 @@ namespace GestaoAcademica.Cursos.Data.Repository
             return await _context.Cursos.AsNoTracking().ToListAsync();
         }
 
+        public async Task<IEnumerable<Curso>> ObterCursosDisciplinas()
+        {
+            var cursos = await _context.Cursos
+                .Include(x => x.CursosDisciplinas)
+                .ThenInclude(x => x.Disciplina)
+                .AsNoTracking()
+                .ToListAsync();
+
+            if (cursos == null) return null;
+
+            return cursos;
+        }
+
         public void AdicionarDisciplina(Disciplina disciplina)
         {
             _context.Disciplinas.Add(disciplina);

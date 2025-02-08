@@ -20,6 +20,13 @@ namespace GestaoAcademica.WebApi.Controllers
             _turmaQueries = turmaQueries;
         }
 
+        [HttpGet]
+        [Route("obter-turma")]
+        public async Task<TurmaAlunosDto> ObterTurma(Guid idTurma)
+        {
+            return await _turmaQueries.ObterTurmaPorId(idTurma);
+        }
+
         [HttpPost]
         [Route("abrir-turma")]
         public async Task AbrirTurma([FromBody] TurmaDto turmaDto)
@@ -36,13 +43,6 @@ namespace GestaoAcademica.WebApi.Controllers
             var command = new MatricularAlunoCommand(idTurma, idAluno, nomeAluno);
 
             await _mediatorHandler.EnviarComando(command);
-        }
-
-        [HttpGet]
-        [Route("obter-turma")]
-        public async Task<TurmaAlunosDto> ObterTurma(Guid idTurma)
-        {
-            return await _turmaQueries.ObterTurmaPorId(idTurma);
         }
     }
 }

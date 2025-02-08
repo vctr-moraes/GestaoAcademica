@@ -1,5 +1,7 @@
 ﻿using GestaoAcademica.Core.Communication.Mediator;
 using GestaoAcademica.Cursos.Application.Commands;
+using GestaoAcademica.Cursos.Application.Queries;
+using GestaoAcademica.Cursos.Application.Queries.Dtos;
 using GestaoAcademica.WebApi.Dtos;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,10 +12,33 @@ namespace GestaoAcademica.WebApi.Controllers
     public class CursoController : ControllerBase
     {
         private readonly IMediatorHandler _mediatorHandler;
+        private readonly ICursoQueries _cursoQueries;
 
-        public CursoController(IMediatorHandler mediatorHandler)
+        public CursoController(IMediatorHandler mediatorHandler, ICursoQueries cursoQueries)
         {
             _mediatorHandler = mediatorHandler;
+            _cursoQueries = cursoQueries;
+        }
+
+        [HttpGet]
+        [Route("obter-curso")]
+        public async Task<CursosDto> ObterCursoPorId(Guid idCurso)
+        {
+            return await _cursoQueries.ObterCursoPorId(idCurso);
+        }
+
+        [HttpGet]
+        [Route("obter-cursos")]
+        public async Task<IEnumerable<CursosDto>> ObterCursos()
+        {
+            return await _cursoQueries.ObterCursos();
+        }
+
+        [HttpGet]
+        [Route("obter-cursos-disciplinas")]
+        public async Task<IEnumerable<CursosDisciplinasDto>> ObterCursosDisciplinas()
+        {
+            return await _cursoQueries.ObterCursosDisciplinas();
         }
 
         [HttpPost]
@@ -41,7 +66,7 @@ namespace GestaoAcademica.WebApi.Controllers
 
         [HttpPost]
         [Route("cadastrar-disciplina")]
-        public async Task CadastrarDisciplina(DisciplinaDto disciplinaDto)
+        public async Task CadastrarDisciplina(DisciplinaCursoDto disciplinaDto)
         {
             var command = new CadastrarDisciplinaCommand(
                 disciplinaDto.Nome,

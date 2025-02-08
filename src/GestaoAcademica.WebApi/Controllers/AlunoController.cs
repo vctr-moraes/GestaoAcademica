@@ -1,4 +1,6 @@
 ﻿using GestaoAcademica.Alunos.Application.Commands;
+using GestaoAcademica.Alunos.Application.Queries;
+using GestaoAcademica.Alunos.Application.Queries.Dtos;
 using GestaoAcademica.Core.Communication.Mediator;
 using GestaoAcademica.WebApi.Dtos;
 using Microsoft.AspNetCore.Mvc;
@@ -10,10 +12,19 @@ namespace GestaoAcademica.WebApi.Controllers
     public class AlunoController : ControllerBase
     {
         private readonly IMediatorHandler _mediatorHandler;
+        private readonly IAlunoQueries _alunoQueries;
 
-        public AlunoController(IMediatorHandler mediatorHandler)
+        public AlunoController(IMediatorHandler mediatorHandler, IAlunoQueries alunoQueries)
         {
             _mediatorHandler = mediatorHandler;
+            _alunoQueries = alunoQueries;
+        }
+
+        [HttpGet]
+        [Route("obter-alunos")]
+        public async Task<IEnumerable<AlunoCadastradosDto>> ObterAlunos()
+        {
+            return await _alunoQueries.ObterAlunos();
         }
 
         [HttpPost]
