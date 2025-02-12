@@ -22,7 +22,7 @@ namespace GestaoAcademica.WebApi.Controllers
 
         [HttpGet]
         [Route("obter-alunos")]
-        public async Task<IEnumerable<AlunoCadastradosDto>> ObterAlunos()
+        public async Task<IEnumerable<AlunosDto>> ObterAlunos()
         {
             return await _alunoQueries.ObterAlunos();
         }

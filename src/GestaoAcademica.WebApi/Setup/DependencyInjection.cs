@@ -10,6 +10,7 @@ using GestaoAcademica.Cursos.Data;
 using GestaoAcademica.Cursos.Data.Repository;
 using GestaoAcademica.Cursos.Domain.Interfaces;
 using GestaoAcademica.Professores.Application.Commands;
+using GestaoAcademica.Professores.Application.Queries;
 using GestaoAcademica.Professores.Data;
 using GestaoAcademica.Professores.Data.Repository;
 using GestaoAcademica.Professores.Domain.Interfaces;
@@ -49,13 +50,14 @@ namespace GestaoAcademica.WebApi.Setup
             services.AddScoped<IProfessorRepository, ProfessorRepository>();
             services.AddScoped<IRequestHandler<CadastrarProfessorCommand, bool>, ProfessorCommandHandler>();
             services.AddScoped<IRequestHandler<ExcluirProfessorCommand, bool>, ProfessorCommandHandler>();
-            services.AddScoped<IAlunoQueries, AlunoQueries>();
+            services.AddScoped<IProfessorQueries, ProfessorQueries>();
 
             // Alunos
             services.AddScoped<AlunoContext>();
             services.AddScoped<IAlunoRepository, AlunoRepository>();
             services.AddScoped<IRequestHandler<CadastrarAlunoCommand, bool>, AlunoCommandHandler>();
             services.AddScoped<IRequestHandler<ExcluirAlunoCommand, bool>, AlunoCommandHandler>();
+            services.AddScoped<IAlunoQueries, AlunoQueries>();
 
             // Turma
             services.AddScoped<TurmaContext>();

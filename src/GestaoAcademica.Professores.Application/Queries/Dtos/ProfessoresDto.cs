@@ -1,12 +1,10 @@
-﻿using GestaoAcademica.Core.ValueObjects;
-
-namespace GestaoAcademica.WebApi.Dtos
+﻿namespace GestaoAcademica.Professores.Application.Queries.Dtos
 {
-    public class ProfessorDto
+    public class ProfessoresDto
     {
+        public Guid Id { get; set; }
         public string? Nome { get; set; }
         public string? NumeroDocumento { get; set; }
         public DateOnly DataNascimento { get; set; }
-        public Endereco? Endereco { get; set; }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace GestaoAcademica.Alunos.Application.Queries.Dtos
 {
-    public class AlunoCadastradosDto
+    public class AlunosDto
     {
         public string? Nome { get; set; }
         public string? NumeroDocumento { get; set; }
