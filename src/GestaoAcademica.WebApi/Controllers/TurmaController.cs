@@ -22,9 +22,10 @@ namespace GestaoAcademica.WebApi.Controllers
 
         [HttpGet]
         [Route("obter-turma")]
-        public async Task<TurmaAlunosDto> ObterTurma(Guid idTurma)
+        public async Task<ActionResult<TurmaAlunosDto>> ObterTurma(Guid idTurma)
         {
-            return await _turmaQueries.ObterTurmaPorId(idTurma);
+            var turma = await _turmaQueries.ObterTurmaPorId(idTurma);
+            return turma != null ? Ok(turma) : NotFound();
         }
 
         [HttpPost]

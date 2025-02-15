@@ -22,16 +22,18 @@ namespace GestaoAcademica.WebApi.Controllers
 
         [HttpGet]
         [Route("obter-professor")]
-        public async Task<ProfessoresDto> ObterProfessor(Guid idProfessor)
+        public async Task<ActionResult<ProfessoresDto>> ObterProfessor(Guid idProfessor)
         {
-            return await _professorQueries.ObterProfessor(idProfessor);
+            var professor = await _professorQueries.ObterProfessor(idProfessor);
+            return professor != null ? Ok(professor) : NotFound();
         }
 
         [HttpGet]
         [Route("obter-professores")]
-        public async Task<IEnumerable<ProfessoresDto>> ObterProfessores()
+        public async Task<ActionResult<IEnumerable<ProfessoresDto>>> ObterProfessores()
         {
-            return await _professorQueries.ObterProfessores();
+            var professores = await _professorQueries.ObterProfessores();
+            return professores != null && professores.Any() ? Ok(professores) : NoContent();
         }
 
         [HttpPost]
@@ -56,3 +58,4 @@ namespace GestaoAcademica.WebApi.Controllers
         }
     }
 }
+    

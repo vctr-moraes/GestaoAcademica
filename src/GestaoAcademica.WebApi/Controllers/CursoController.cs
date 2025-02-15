@@ -22,23 +22,26 @@ namespace GestaoAcademica.WebApi.Controllers
 
         [HttpGet]
         [Route("obter-curso")]
-        public async Task<CursosDto> ObterCursoPorId(Guid idCurso)
+        public async Task<ActionResult<CursosDto>> ObterCurso(Guid idCurso)
         {
-            return await _cursoQueries.ObterCursoPorId(idCurso);
+            var curso = await _cursoQueries.ObterCursoPorId(idCurso);
+            return curso != null ? Ok(curso) : NotFound();
         }
 
         [HttpGet]
         [Route("obter-cursos")]
-        public async Task<IEnumerable<CursosDto>> ObterCursos()
+        public async Task<ActionResult<IEnumerable<CursosDto>>> ObterCursos()
         {
-            return await _cursoQueries.ObterCursos();
+            var cursos = await _cursoQueries.ObterCursos();
+            return cursos != null && cursos.Any() ? Ok(cursos) : NoContent();
         }
 
         [HttpGet]
         [Route("obter-cursos-disciplinas")]
-        public async Task<IEnumerable<CursosDisciplinasDto>> ObterCursosDisciplinas()
+        public async Task<ActionResult<IEnumerable<CursosDisciplinasDto>>> ObterCursosDisciplinas()
         {
-            return await _cursoQueries.ObterCursosDisciplinas();
+            var cursosDisciplinas = await _cursoQueries.ObterCursosDisciplinas();
+            return cursosDisciplinas != null && cursosDisciplinas.Any() ? Ok(cursosDisciplinas) : NoContent();
         }
 
         [HttpPost]
