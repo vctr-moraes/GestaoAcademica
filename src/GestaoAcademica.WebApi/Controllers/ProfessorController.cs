@@ -1,8 +1,10 @@
 ﻿using GestaoAcademica.Core.Communication.Mediator;
+using GestaoAcademica.Core.Messages.CommonMessages.Notifications;
 using GestaoAcademica.Professores.Application.Commands;
 using GestaoAcademica.Professores.Application.Queries;
 using GestaoAcademica.Professores.Application.Queries.Dtos;
 using GestaoAcademica.WebApi.Dtos;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GestaoAcademica.WebApi.Controllers
@@ -14,7 +16,10 @@ namespace GestaoAcademica.WebApi.Controllers
         private readonly IMediatorHandler _mediatorHandler;
         private readonly IProfessorQueries _professorQueries;
 
-        public ProfessorController(IMediatorHandler mediatorHandler, IProfessorQueries professorQueries)
+        public ProfessorController(
+            IMediatorHandler mediatorHandler,
+            IProfessorQueries professorQueries,
+            INotificationHandler<DomainNotification> notifications) : base(mediatorHandler, notifications)
         {
             _mediatorHandler = mediatorHandler;
             _professorQueries = professorQueries;
@@ -58,4 +63,3 @@ namespace GestaoAcademica.WebApi.Controllers
         }
     }
 }
-    

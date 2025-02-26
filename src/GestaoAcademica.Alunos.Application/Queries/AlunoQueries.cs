@@ -20,6 +20,7 @@ namespace GestaoAcademica.Alunos.Application.Queries
 
             return alunos.Select(a => new AlunosDto
             {
+                Id = a.Id,
                 Nome = a.Nome,
                 DataNascimento = a.DataNascimento,
                 Status = a.Status.ToString(),

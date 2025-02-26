@@ -4,6 +4,7 @@ using GestaoAcademica.Alunos.Data;
 using GestaoAcademica.Alunos.Data.Repository;
 using GestaoAcademica.Alunos.Domain.Interfaces;
 using GestaoAcademica.Core.Communication.Mediator;
+using GestaoAcademica.Core.Messages.CommonMessages.Notifications;
 using GestaoAcademica.Cursos.Application.Commands;
 using GestaoAcademica.Cursos.Application.Queries;
 using GestaoAcademica.Cursos.Data;
@@ -29,6 +30,9 @@ namespace GestaoAcademica.WebApi.Setup
         {
             // Mediatr
             services.AddScoped<IMediatorHandler, MediatorHandler>();
+
+            // Notifications
+            services.AddScoped<INotificationHandler<DomainNotification>, DomainNotificationHandler>();
 
             // Cursos
             services.AddScoped<CursoContext>();

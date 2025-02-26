@@ -1,6 +1,8 @@
 ﻿using GestaoAcademica.Alunos.Domain.Interfaces;
 using GestaoAcademica.Alunos.Domain.Models;
+using GestaoAcademica.Core.Communication.Mediator;
 using GestaoAcademica.Core.Messages;
+using GestaoAcademica.Core.Messages.CommonMessages.Notifications;
 using MediatR;
 
 namespace GestaoAcademica.Alunos.Application.Commands
@@ -8,10 +10,12 @@ namespace GestaoAcademica.Alunos.Application.Commands
     public class AlunoCommandHandler : IRequestHandler<CadastrarAlunoCommand, bool>, IRequestHandler<ExcluirAlunoCommand, bool>
     {
         private readonly IAlunoRepository _alunoRepository;
+        private readonly IMediatorHandler _mediatorHandler;
 
-        public AlunoCommandHandler(IAlunoRepository alunoRepository)
+        public AlunoCommandHandler(IAlunoRepository alunoRepository, IMediatorHandler mediatorHandler)
         {
             _alunoRepository = alunoRepository;
+            _mediatorHandler = mediatorHandler;
         }
 
         public async Task<bool> Handle(CadastrarAlunoCommand message, CancellationToken cancellationToken)
@@ -34,8 +38,17 @@ namespace GestaoAcademica.Alunos.Application.Commands
         {
             var aluno = await _alunoRepository.ObterPorId(message.IdAluno);
 
-            if (aluno == null) return false;
-            if (aluno.Status == Status.Ativo) return false;
+            if (aluno == null)
+            {
+                await _mediatorHandler.PublicarNotificacao(new DomainNotification("aluno", "Aluno não encontrado."));
+                return false;
+            }
+
+            if (aluno.Status == Status.Ativo)
+            {
+                await _mediatorHandler.PublicarNotificacao(new DomainNotification("aluno", "O aluno não pode ser excluído, pois possui status ativo."));
+                return false;
+            }
 
             _alunoRepository.Excluir(aluno);
             return await _alunoRepository.UnitOfWork.Commit();

@@ -2,7 +2,9 @@
 using GestaoAcademica.Alunos.Application.Queries;
 using GestaoAcademica.Alunos.Application.Queries.Dtos;
 using GestaoAcademica.Core.Communication.Mediator;
+using GestaoAcademica.Core.Messages.CommonMessages.Notifications;
 using GestaoAcademica.WebApi.Dtos;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GestaoAcademica.WebApi.Controllers
@@ -14,7 +16,10 @@ namespace GestaoAcademica.WebApi.Controllers
         private readonly IMediatorHandler _mediatorHandler;
         private readonly IAlunoQueries _alunoQueries;
 
-        public AlunoController(IMediatorHandler mediatorHandler, IAlunoQueries alunoQueries)
+        public AlunoController(
+            IMediatorHandler mediatorHandler,
+            IAlunoQueries alunoQueries,
+            INotificationHandler<DomainNotification> notifications) : base(mediatorHandler, notifications)
         {
             _mediatorHandler = mediatorHandler;
             _alunoQueries = alunoQueries;
@@ -30,7 +35,7 @@ namespace GestaoAcademica.WebApi.Controllers
 
         [HttpPost]
         [Route("cadastrar-aluno")]
-        public async Task CadastrarAluno(AlunoDto alunoDto)
+        public async Task<ActionResult> CadastrarAluno(AlunoDto alunoDto)
         {
             var command = new CadastrarAlunoCommand(
                 alunoDto.Nome,
@@ -41,14 +46,28 @@ namespace GestaoAcademica.WebApi.Controllers
                 alunoDto.NomeMae);
 
             await _mediatorHandler.EnviarComando(command);
+
+            if (OperacaoValida())
+            {
+                return Ok();
+            }
+
+            return BadRequest(ObterMensagensErro());
         }
 
         [HttpDelete]
         [Route("excluir-aluno")]
-        public async Task ExcluirAluno(Guid idAluno)
+        public async Task<ActionResult> ExcluirAluno(Guid idAluno)
         {
             var command = new ExcluirAlunoCommand(idAluno);
             await _mediatorHandler.EnviarComando(command);
+
+            if (OperacaoValida())
+            {
+                return Ok();
+            }
+
+            return BadRequest(ObterMensagensErro());
         }
     }
 }

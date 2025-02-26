@@ -1,8 +1,10 @@
 ﻿using GestaoAcademica.Core.Communication.Mediator;
+using GestaoAcademica.Core.Messages.CommonMessages.Notifications;
 using GestaoAcademica.Turmas.Application.Commands;
 using GestaoAcademica.Turmas.Application.Queries;
 using GestaoAcademica.Turmas.Application.Queries.Dtos;
 using GestaoAcademica.WebApi.Dtos;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GestaoAcademica.WebApi.Controllers
@@ -14,7 +16,10 @@ namespace GestaoAcademica.WebApi.Controllers
         private readonly IMediatorHandler _mediatorHandler;
         private readonly ITurmaQueries _turmaQueries;
 
-        public TurmaController(IMediatorHandler mediatorHandler, ITurmaQueries turmaQueries)
+        public TurmaController(
+            IMediatorHandler mediatorHandler,
+            ITurmaQueries turmaQueries,
+            INotificationHandler<DomainNotification> notifications) : base(mediatorHandler, notifications)
         {
             _mediatorHandler = mediatorHandler;
             _turmaQueries = turmaQueries;
