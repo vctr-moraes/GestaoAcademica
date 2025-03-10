@@ -66,10 +66,17 @@ namespace GestaoAcademica.WebApi.Controllers
 
         [HttpDelete]
         [Route("excluir-curso")]
-        public async Task ExcluirCurso(Guid cursoId)
+        public async Task<ActionResult> ExcluirCurso(Guid cursoId)
         {
             var command = new ExcluirCursoCommand(cursoId);
             await _mediatorHandler.EnviarComando(command);
+
+            if (OperacaoValida())
+            {
+                return Ok();
+            }
+
+            return BadRequest(ObterMensagensErro());
         }
 
         [HttpPost]
@@ -86,58 +93,107 @@ namespace GestaoAcademica.WebApi.Controllers
 
         [HttpDelete]
         [Route("excluir-disciplina")]
-        public async Task ExcluirDisciplina(Guid disciplinaId)
+        public async Task<ActionResult> ExcluirDisciplina(Guid disciplinaId)
         {
             var command = new ExcluirDisciplinaCommand(disciplinaId);
             await _mediatorHandler.EnviarComando(command);
+
+            if (OperacaoValida())
+            {
+                return Ok();
+            }
+
+            return BadRequest(ObterMensagensErro());
         }
 
         [HttpPost]
         [Route("vincular-disciplina")]
-        public async Task VincularDisciplina(Guid cursoId, Guid disciplinaId)
+        public async Task<ActionResult> VincularDisciplina(Guid cursoId, Guid disciplinaId)
         {
             var command = new VincularDisciplinaCommand(cursoId, disciplinaId);
             await _mediatorHandler.EnviarComando(command);
+
+            if (OperacaoValida())
+            {
+                return Ok();
+            }
+
+            return BadRequest(ObterMensagensErro());
         }
 
         [HttpPost]
         [Route("desvincular-disciplina")]
-        public async Task DesvincularDisciplina(Guid cursoId, Guid disciplinaId)
+        public async Task<ActionResult> DesvincularDisciplina(Guid cursoId, Guid disciplinaId)
         {
             var command = new DesvincularDisciplinaCommand(cursoId, disciplinaId);
             await _mediatorHandler.EnviarComando(command);
+
+            if (OperacaoValida())
+            {
+                return Ok();
+            }
+
+            return BadRequest(ObterMensagensErro());
         }
 
         [HttpPost]
         [Route("atribuir-professor-coordenador")]
-        public async Task AtribuirProfessorCoordenador(Guid idCurso, Guid idProfessor, string nomeProfessor)
+        public async Task<ActionResult> AtribuirProfessorCoordenador(Guid idCurso, Guid idProfessor, string nomeProfessor)
         {
             var command = new AtribuirProfessorCoordenadorCommand(idCurso, idProfessor, nomeProfessor);
             await _mediatorHandler.EnviarComando(command);
+
+            if (OperacaoValida())
+            {
+                return Ok();
+            }
+
+            return BadRequest(ObterMensagensErro());
         }
 
         [HttpPost]
         [Route("desvincular-professor-coordenador")]
-        public async Task DesvincularProfessorCoordenador(Guid idCurso, Guid idProfessor)
+        public async Task<ActionResult> DesvincularProfessorCoordenador(Guid idCurso, Guid idProfessor)
         {
             var command = new DesvincularProfessorCoordenadorCommand(idCurso, idProfessor);
             await _mediatorHandler.EnviarComando(command);
+
+            if (OperacaoValida())
+            {
+                return Ok();
+            }
+
+            return BadRequest(ObterMensagensErro());
         }
 
         [HttpPost]
         [Route("atribuir-professor")]
-        public async Task AtribuirProfessor(Guid idDisciplina, Guid idProfessor, string nomeProfessor)
+        public async Task<ActionResult> AtribuirProfessor(Guid idDisciplina, Guid idProfessor, string nomeProfessor)
         {
             var command = new AtribuirProfessorCommand(idDisciplina, idProfessor, nomeProfessor);
             await _mediatorHandler.EnviarComando(command);
+
+            if (OperacaoValida())
+            {
+                return Ok();
+            }
+
+            return BadRequest(ObterMensagensErro());
         }
 
         [HttpPost]
         [Route("desvincular-professor")]
-        public async Task DesvincularProfessor(Guid idDisciplina, Guid idProfessor)
+        public async Task<ActionResult> DesvincularProfessor(Guid idDisciplina, Guid idProfessor)
         {
             var command = new DesvincularProfessorCommand(idDisciplina, idProfessor);
             await _mediatorHandler.EnviarComando(command);
+
+            if (OperacaoValida())
+            {
+                return Ok();
+            }
+
+            return BadRequest(ObterMensagensErro());
         }
     }
 }

@@ -56,10 +56,17 @@ namespace GestaoAcademica.WebApi.Controllers
 
         [HttpDelete]
         [Route("excluir-professor")]
-        public async Task ExcluirProfessor(Guid idProfessor)
+        public async Task<ActionResult> ExcluirProfessor(Guid idProfessor)
         {
             var command = new ExcluirProfessorCommand(idProfessor);
             await _mediatorHandler.EnviarComando(command);
+
+            if (OperacaoValida())
+            {
+                return Ok();
+            }
+
+            return BadRequest(ObterMensagensErro());
         }
     }
 }

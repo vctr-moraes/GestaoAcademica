@@ -1,4 +1,6 @@
-﻿using GestaoAcademica.Core.Messages;
+﻿using GestaoAcademica.Core.Communication.Mediator;
+using GestaoAcademica.Core.Messages;
+using GestaoAcademica.Core.Messages.CommonMessages.Notifications;
 using GestaoAcademica.Turmas.Domain.Interfaces;
 using GestaoAcademica.Turmas.Domain.Models;
 using MediatR;
@@ -8,10 +10,12 @@ namespace GestaoAcademica.Turmas.Application.Commands
     public class TurmaCommandHandler : IRequestHandler<AbrirTurmaCommand, bool>, IRequestHandler<MatricularAlunoCommand, bool>
     {
         private readonly ITurmaRepository _turmaRepository;
+        private readonly IMediatorHandler _mediatorHandler;
 
-        public TurmaCommandHandler(ITurmaRepository turmaRepository)
+        public TurmaCommandHandler(ITurmaRepository turmaRepository, IMediatorHandler mediatorHandler)
         {
             _turmaRepository = turmaRepository;
+            _mediatorHandler = mediatorHandler;
         }
 
         public async Task<bool> Handle(AbrirTurmaCommand message, CancellationToken cancellationToken)
@@ -30,8 +34,17 @@ namespace GestaoAcademica.Turmas.Application.Commands
 
             var turma = await _turmaRepository.ObterPorId(message.IdTurma);
 
-            if (turma == null) return false;
-            if (turma.Alunos.Any(x => x.IdAluno == message.IdAluno)) return false;
+            if (turma == null)
+            {
+                await _mediatorHandler.PublicarNotificacao(new DomainNotification("turma", "Turma não encontrada."));
+                return false;
+            }
+
+            if (turma.Alunos.Any(x => x.IdAluno == message.IdAluno))
+            {
+                await _mediatorHandler.PublicarNotificacao(new DomainNotification("aluno", "Aluno já matriculado na turma."));
+                return false;
+            }
 
             var alunoCursante = new AlunoCursante(turma, message.IdAluno, message.NomeAluno);
 

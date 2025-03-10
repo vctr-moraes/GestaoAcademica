@@ -1,4 +1,6 @@
-﻿using GestaoAcademica.Core.Messages;
+﻿using GestaoAcademica.Core.Communication.Mediator;
+using GestaoAcademica.Core.Messages;
+using GestaoAcademica.Core.Messages.CommonMessages.Notifications;
 using GestaoAcademica.Cursos.Domain.Interfaces;
 using GestaoAcademica.Cursos.Domain.Models;
 using MediatR;
@@ -17,10 +19,12 @@ namespace GestaoAcademica.Cursos.Application.Commands
                                        IRequestHandler<ExcluirDisciplinaCommand, bool>
     {
         private readonly ICursoRepository _cursoRepository;
+        private readonly IMediatorHandler _mediatorHandler;
 
-        public CursoCommandHandler(ICursoRepository cursoRepository)
+        public CursoCommandHandler(ICursoRepository cursoRepository, IMediatorHandler mediatorHandler)
         {
             _cursoRepository = cursoRepository;
+            _mediatorHandler = mediatorHandler;
         }
 
         public async Task<bool> Handle(CadastrarCursoCommand message, CancellationToken cancellationToken)
@@ -43,7 +47,11 @@ namespace GestaoAcademica.Cursos.Application.Commands
         {
             var curso = await _cursoRepository.ObterPorId(message.CursoId);
 
-            if (curso == null) return false;
+            if (curso == null)
+            {
+                await _mediatorHandler.PublicarNotificacao(new DomainNotification("curso", "Curso não encontrado."));
+                return false;
+            }
 
             _cursoRepository.Excluir(curso);
             return await _cursoRepository.UnitOfWork.Commit();
@@ -63,8 +71,17 @@ namespace GestaoAcademica.Cursos.Application.Commands
         {
             var disciplina = await _cursoRepository.ObterDisciplinaPorId(message.DisciplinaId);
 
-            if (disciplina == null) return false;
-            if (disciplina.CursosDisciplinas?.DisciplinaId == message.DisciplinaId) return false;
+            if (disciplina == null)
+            {
+                await _mediatorHandler.PublicarNotificacao(new DomainNotification("disciplina", "Disciplina não encontrada."));
+                return false;
+            }
+
+            if (disciplina.CursosDisciplinas?.DisciplinaId == message.DisciplinaId)
+            {
+                await _mediatorHandler.PublicarNotificacao(new DomainNotification("disciplina", "A disciplina não pode ser excluída, pois está vinculada a um curso."));
+                return false;
+            }
 
             _cursoRepository.ExcluirDisciplina(disciplina);
             return await _cursoRepository.UnitOfWork.Commit();
@@ -75,7 +92,18 @@ namespace GestaoAcademica.Cursos.Application.Commands
             var curso = await _cursoRepository.ObterPorId(message.CursoId);
             var disciplina = await _cursoRepository.ObterDisciplinaPorId(message.DisciplinaId);
 
-            if (curso == null || disciplina == null) return false;
+            if (curso == null)
+            {
+                await _mediatorHandler.PublicarNotificacao(new DomainNotification("curso", "Curso não encontrado."));
+                return false;
+            }
+
+            if (disciplina == null)
+            {
+                await _mediatorHandler.PublicarNotificacao(new DomainNotification("disciplina", "Disciplina não encontrada."));
+                return false;
+            }
+
             if (curso.CursosDisciplinas.Any(x => x.DisciplinaId == disciplina.Id)) return false;
 
             var cursoDisciplina = new CursosDisciplinas(curso, disciplina);
@@ -92,8 +120,23 @@ namespace GestaoAcademica.Cursos.Application.Commands
             var curso = await _cursoRepository.ObterPorId(message.CursoId);
             var cursoDisciplina = await _cursoRepository.ObterCursoDisciplina(message.CursoId, message.DisciplinaId);
 
-            if (curso == null || cursoDisciplina == null) return false;
-            if (!curso.CursosDisciplinas.Any(x => x.DisciplinaId == message.DisciplinaId)) return false;
+            if (curso == null)
+            {
+                await _mediatorHandler.PublicarNotificacao(new DomainNotification("curso", "Curso não encontrado."));
+                return false;
+            }
+
+            if (cursoDisciplina == null)
+            {
+                await _mediatorHandler.PublicarNotificacao(new DomainNotification("disciplina", "Disciplina não encontrada."));
+                return false;
+            }
+
+            if (!curso.CursosDisciplinas.Any(x => x.DisciplinaId == message.DisciplinaId))
+            {
+                await _mediatorHandler.PublicarNotificacao(new DomainNotification("disciplina", "Disciplina não possui vínculo com o curso informado."));
+                return false;
+            }
 
             curso.DesvincularDisciplina(cursoDisciplina);
 
@@ -107,8 +150,17 @@ namespace GestaoAcademica.Cursos.Application.Commands
         {
             var curso = await _cursoRepository.ObterPorId(message.IdCurso);
 
-            if (curso == null) return false;
-            if (curso.IdProfessorCoordenador == message.IdProfessor) return false;
+            if (curso == null)
+            {
+                await _mediatorHandler.PublicarNotificacao(new DomainNotification("curso", "Curso não encontrado."));
+                return false;
+            }
+
+            if (curso.IdProfessorCoordenador == message.IdProfessor)
+            {
+                await _mediatorHandler.PublicarNotificacao(new DomainNotification("professor", "Professor já é coordenador do curso informado."));
+                return false;
+            }
 
             curso.AtribuirProfessorCoordenador(message.IdProfessor, message.NomeProfessor);
 
@@ -120,8 +172,17 @@ namespace GestaoAcademica.Cursos.Application.Commands
         {
             var curso = await _cursoRepository.ObterPorId(message.IdCurso);
 
-            if (curso == null) return false;
-            if (curso.IdProfessorCoordenador != message.IdProfessor) return false;
+            if (curso == null)
+            {
+                await _mediatorHandler.PublicarNotificacao(new DomainNotification("curso", "Curso não encontrado."));
+                return false;
+            }
+
+            if (curso.IdProfessorCoordenador != message.IdProfessor)
+            {
+                await _mediatorHandler.PublicarNotificacao(new DomainNotification("professor", "Professor não é coordenador do curso informado."));
+                return false;
+            }
 
             curso.DesvincularProfessorCoordenador(message.IdProfessor);
 
@@ -133,8 +194,17 @@ namespace GestaoAcademica.Cursos.Application.Commands
         {
             var disciplina = await _cursoRepository.ObterDisciplinaPorId(message.IdDisciplina);
 
-            if (disciplina == null) return false;
-            if (disciplina.IdProfessor == message.IdProfessor) return false;
+            if (disciplina == null)
+            {
+                await _mediatorHandler.PublicarNotificacao(new DomainNotification("disciplina", "Disciplina não encontrada."));
+                return false;
+            }
+
+            if (disciplina.IdProfessor == message.IdProfessor)
+            {
+                await _mediatorHandler.PublicarNotificacao(new DomainNotification("professor", "Professor já atribuído à disciplina informada."));
+                return false;
+            }
 
             disciplina.AtribuirProfessor(message.IdProfessor, message.NomeProfessor);
 
@@ -146,8 +216,17 @@ namespace GestaoAcademica.Cursos.Application.Commands
         {
             var disciplina = await _cursoRepository.ObterDisciplinaPorId(message.IdDisciplina);
 
-            if (disciplina == null) return false;
-            if (disciplina.IdProfessor != message.IdProfessor) return false;
+            if (disciplina == null)
+            {
+                await _mediatorHandler.PublicarNotificacao(new DomainNotification("disciplina", "Disciplina não encontrada."));
+                return false;
+            }
+
+            if (disciplina.IdProfessor != message.IdProfessor)
+            {
+                await _mediatorHandler.PublicarNotificacao(new DomainNotification("professor", "Professor não está atribuído à disciplina informada."));
+                return false;
+            }
 
             disciplina.DesvincularProfessor(message.IdProfessor);
 
