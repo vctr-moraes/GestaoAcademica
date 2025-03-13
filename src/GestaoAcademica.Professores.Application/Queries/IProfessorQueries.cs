@@ -4,7 +4,7 @@ namespace GestaoAcademica.Professores.Application.Queries
 {
     public interface IProfessorQueries
     {
-        Task<ProfessoresDto> ObterProfessor(Guid idProfessor);
-        Task<IEnumerable<ProfessoresDto>> ObterProfessores();
+        Task<ProfessorDetailsDto> ObterProfessor(Guid idProfessor);
+        Task<IEnumerable<ProfessorDetailsDto>> ObterProfessores();
     }
 }

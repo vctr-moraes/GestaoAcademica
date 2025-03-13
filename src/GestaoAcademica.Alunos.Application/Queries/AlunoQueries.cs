@@ -12,13 +12,13 @@ namespace GestaoAcademica.Alunos.Application.Queries
             _alunoRepository = alunoRepository;
         }
 
-        public async Task<IEnumerable<AlunosDto>> ObterAlunos()
+        public async Task<IEnumerable<AlunosDetailsDto>> ObterAlunos()
         {
             var alunos = await _alunoRepository.ObterTodos();
 
             if (alunos == null) return null;
 
-            return alunos.Select(a => new AlunosDto
+            return alunos.Select(a => new AlunosDetailsDto
             {
                 Id = a.Id,
                 Nome = a.Nome,

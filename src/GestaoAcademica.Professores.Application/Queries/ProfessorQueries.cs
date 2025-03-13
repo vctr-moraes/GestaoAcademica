@@ -12,13 +12,13 @@ namespace GestaoAcademica.Professores.Application.Queries
             _professorRepository = professorRepository;
         }
 
-        public async Task<ProfessoresDto> ObterProfessor(Guid idProfessor)
+        public async Task<ProfessorDetailsDto> ObterProfessor(Guid idProfessor)
         {
             var professor = await _professorRepository.ObterPorId(idProfessor);
 
             if (professor == null) return null;
 
-            return new ProfessoresDto
+            return new ProfessorDetailsDto
             {
                 Id = professor.Id,
                 Nome = professor.Nome,
@@ -27,13 +27,13 @@ namespace GestaoAcademica.Professores.Application.Queries
             };
         }
 
-        public async Task<IEnumerable<ProfessoresDto>> ObterProfessores()
+        public async Task<IEnumerable<ProfessorDetailsDto>> ObterProfessores()
         {
             var professores = await _professorRepository.ObterTodos();
 
             if (professores == null) return null;
 
-            return professores.Select(p => new ProfessoresDto
+            return professores.Select(p => new ProfessorDetailsDto
             {
                 Id = p.Id,
                 Nome = p.Nome,

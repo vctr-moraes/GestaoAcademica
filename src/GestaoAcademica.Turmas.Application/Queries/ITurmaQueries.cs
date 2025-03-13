@@ -4,6 +4,6 @@ namespace GestaoAcademica.Turmas.Application.Queries
 {
     public interface ITurmaQueries
     {
-        Task<TurmaAlunosDto> ObterTurmaPorId(Guid idTurma);
+        Task<TurmaAlunosDetailsDto> ObterTurmaPorId(Guid idTurma);
     }
 }

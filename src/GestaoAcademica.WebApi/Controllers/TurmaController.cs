@@ -1,9 +1,9 @@
 ﻿using GestaoAcademica.Core.Communication.Mediator;
 using GestaoAcademica.Core.Messages.CommonMessages.Notifications;
 using GestaoAcademica.Turmas.Application.Commands;
+using GestaoAcademica.Turmas.Application.Dtos;
 using GestaoAcademica.Turmas.Application.Queries;
 using GestaoAcademica.Turmas.Application.Queries.Dtos;
-using GestaoAcademica.WebApi.Dtos;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -27,7 +27,7 @@ namespace GestaoAcademica.WebApi.Controllers
 
         [HttpGet]
         [Route("obter-turma")]
-        public async Task<ActionResult<TurmaAlunosDto>> ObterTurma(Guid idTurma)
+        public async Task<ActionResult<TurmaAlunosDetailsDto>> ObterTurma(Guid idTurma)
         {
             var turma = await _turmaQueries.ObterTurmaPorId(idTurma);
             return turma != null ? Ok(turma) : NotFound();
@@ -35,7 +35,7 @@ namespace GestaoAcademica.WebApi.Controllers
 
         [HttpPost]
         [Route("abrir-turma")]
-        public async Task AbrirTurma([FromBody] TurmaDto turmaDto)
+        public async Task AbrirTurma([FromBody] TurmaCreateEditDto turmaDto)
         {
             var command = new AbrirTurmaCommand(turmaDto.DataInicio, turmaDto.IdCurso, turmaDto.NomeCurso);
 

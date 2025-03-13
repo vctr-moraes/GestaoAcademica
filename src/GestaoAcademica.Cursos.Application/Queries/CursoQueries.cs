@@ -13,13 +13,13 @@ namespace GestaoAcademica.Cursos.Application.Queries
             _cursoRepository = cursoRepository;
         }
 
-        public async Task<CursosDto> ObterCursoPorId(Guid idCurso)
+        public async Task<CursoDetailsDto> ObterCursoPorId(Guid idCurso)
         {
             var curso = await _cursoRepository.ObterPorId(idCurso);
 
             if (curso == null) return null;
 
-            return new CursosDto
+            return new CursoDetailsDto
             {
                 Id = curso.Id,
                 Nome = curso.Nome,
@@ -31,13 +31,13 @@ namespace GestaoAcademica.Cursos.Application.Queries
             };
         }
 
-        public async Task<IEnumerable<CursosDto>> ObterCursos()
+        public async Task<IEnumerable<CursoDetailsDto>> ObterCursos()
         {
             var cursos = await _cursoRepository.ObterTodos();
 
             if (cursos == null) return null;
 
-            return cursos.Select(x => new CursosDto
+            return cursos.Select(x => new CursoDetailsDto
             {
                 Id = x.Id,
                 Nome = x.Nome,
@@ -49,13 +49,13 @@ namespace GestaoAcademica.Cursos.Application.Queries
             });
         }
 
-        public async Task<IEnumerable<CursosDisciplinasDto>> ObterCursosDisciplinas()
+        public async Task<IEnumerable<CursosDisciplinasDetailsDto>> ObterCursosDisciplinas()
         {
             var cursos = await _cursoRepository.ObterCursosDisciplinas();
 
             if (cursos == null) return null;
 
-            return cursos.Select(x => new CursosDisciplinasDto
+            return cursos.Select(x => new CursosDisciplinasDetailsDto
             {
                 Id = x.Id,
                 Nome = x.Nome,
@@ -64,7 +64,7 @@ namespace GestaoAcademica.Cursos.Application.Queries
                 Grau = x.Grau.ToString(),
                 Modalidade = x.Modalidade.ToString(),
                 NomeProfessorCoordenador = x.NomeProfessorCoordenador,
-                Disciplinas = x.CursosDisciplinas.Select(d => new DisciplinaDto
+                Disciplinas = x.CursosDisciplinas.Select(d => new DisciplinaDetailsDto
                 {
                     Id = d.Disciplina.Id,
                     Nome = d.Disciplina.Nome,

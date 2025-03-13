@@ -12,19 +12,19 @@ namespace GestaoAcademica.Turmas.Application.Queries
             _turmaRepository = turmaRepository;
         }
 
-        public async Task<TurmaAlunosDto> ObterTurmaPorId(Guid idTurma)
+        public async Task<TurmaAlunosDetailsDto> ObterTurmaPorId(Guid idTurma)
         {
             var turma = await _turmaRepository.ObterPorId(idTurma);
 
             if (turma == null) return null;
 
-            var turmaDto = new TurmaAlunosDto
+            var turmaDto = new TurmaAlunosDetailsDto
             {
                 DataInicio = turma.DataInicio,
                 DataEncerramento = turma.DataEncerramento,
                 StatusTurma = turma.StatusTurma,
                 NomeCurso = turma.NomeCurso,
-                Alunos = turma.Alunos.Select(a => new AlunoCursanteDto
+                Alunos = turma.Alunos.Select(a => new AlunoCursanteDetailsDto
                 {
                     NomeAluno = a.NomeAluno,
                     DataEntrada = a.DataEntrada,

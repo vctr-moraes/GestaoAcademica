@@ -2,16 +2,16 @@
 
 namespace GestaoAcademica.Turmas.Application.Queries.Dtos
 {
-    public class TurmaAlunosDto
+    public class TurmaAlunosDetailsDto
     {
         public DateTime DataInicio { get; set; }
         public DateTime DataEncerramento { get; set; }
         public StatusTurma StatusTurma { get; set; }
         public string? NomeCurso { get; set; }
-        public List<AlunoCursanteDto>? Alunos { get; set; } = new List<AlunoCursanteDto>();
+        public List<AlunoCursanteDetailsDto>? Alunos { get; set; } = new List<AlunoCursanteDetailsDto>();
     }
 
-    public class AlunoCursanteDto
+    public class AlunoCursanteDetailsDto
     {
         public string? NomeAluno { get; set; }
         public DateTime DataEntrada { get; set; }

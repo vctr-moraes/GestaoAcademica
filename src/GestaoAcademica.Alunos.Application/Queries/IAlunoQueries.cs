@@ -4,6 +4,6 @@ namespace GestaoAcademica.Alunos.Application.Queries
 {
     public interface IAlunoQueries
     {
-        Task<IEnumerable<AlunosDto>> ObterAlunos();
+        Task<IEnumerable<AlunosDetailsDto>> ObterAlunos();
     }
 }

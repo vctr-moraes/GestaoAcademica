@@ -1,9 +1,9 @@
 ﻿using GestaoAcademica.Core.Communication.Mediator;
 using GestaoAcademica.Core.Messages.CommonMessages.Notifications;
 using GestaoAcademica.Professores.Application.Commands;
+using GestaoAcademica.Professores.Application.Dtos;
 using GestaoAcademica.Professores.Application.Queries;
 using GestaoAcademica.Professores.Application.Queries.Dtos;
-using GestaoAcademica.WebApi.Dtos;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -27,7 +27,7 @@ namespace GestaoAcademica.WebApi.Controllers
 
         [HttpGet]
         [Route("obter-professor")]
-        public async Task<ActionResult<ProfessoresDto>> ObterProfessor(Guid idProfessor)
+        public async Task<ActionResult<ProfessorDetailsDto>> ObterProfessor(Guid idProfessor)
         {
             var professor = await _professorQueries.ObterProfessor(idProfessor);
             return professor != null ? Ok(professor) : NotFound();
@@ -35,7 +35,7 @@ namespace GestaoAcademica.WebApi.Controllers
 
         [HttpGet]
         [Route("obter-professores")]
-        public async Task<ActionResult<IEnumerable<ProfessoresDto>>> ObterProfessores()
+        public async Task<ActionResult<IEnumerable<ProfessorDetailsDto>>> ObterProfessores()
         {
             var professores = await _professorQueries.ObterProfessores();
             return professores != null && professores.Any() ? Ok(professores) : NoContent();
@@ -43,7 +43,7 @@ namespace GestaoAcademica.WebApi.Controllers
 
         [HttpPost]
         [Route("cadastrar-professor")]
-        public async Task CadastrarProfessor(ProfessorDto professorDto)
+        public async Task CadastrarProfessor(ProfessorCreateEditDto professorDto)
         {
             var command = new CadastrarProfessorCommand(
                 professorDto.Nome,

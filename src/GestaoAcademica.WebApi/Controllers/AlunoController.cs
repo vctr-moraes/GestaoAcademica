@@ -27,7 +27,7 @@ namespace GestaoAcademica.WebApi.Controllers
 
         [HttpGet]
         [Route("obter-alunos")]
-        public async Task<ActionResult<IEnumerable<AlunosDto>>> ObterAlunos()
+        public async Task<ActionResult<IEnumerable<AlunosDetailsDto>>> ObterAlunos()
         {
             var alunos = await _alunoQueries.ObterAlunos();
             return alunos != null && alunos.Any() ? Ok(alunos) : NoContent();
@@ -35,7 +35,7 @@ namespace GestaoAcademica.WebApi.Controllers
 
         [HttpPost]
         [Route("cadastrar-aluno")]
-        public async Task<ActionResult> CadastrarAluno(AlunoDto alunoDto)
+        public async Task<ActionResult> CadastrarAluno(AlunoCreateEditDto alunoDto)
         {
             var command = new CadastrarAlunoCommand(
                 alunoDto.Nome,

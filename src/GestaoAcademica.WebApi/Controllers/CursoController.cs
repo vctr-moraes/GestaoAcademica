@@ -1,9 +1,9 @@
 ﻿using GestaoAcademica.Core.Communication.Mediator;
 using GestaoAcademica.Core.Messages.CommonMessages.Notifications;
 using GestaoAcademica.Cursos.Application.Commands;
+using GestaoAcademica.Cursos.Application.Dtos;
 using GestaoAcademica.Cursos.Application.Queries;
 using GestaoAcademica.Cursos.Application.Queries.Dtos;
-using GestaoAcademica.WebApi.Dtos;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -27,7 +27,7 @@ namespace GestaoAcademica.WebApi.Controllers
 
         [HttpGet]
         [Route("obter-curso")]
-        public async Task<ActionResult<CursosDto>> ObterCurso(Guid idCurso)
+        public async Task<ActionResult<CursoDetailsDto>> ObterCurso(Guid idCurso)
         {
             var curso = await _cursoQueries.ObterCursoPorId(idCurso);
             return curso != null ? Ok(curso) : NotFound();
@@ -35,7 +35,7 @@ namespace GestaoAcademica.WebApi.Controllers
 
         [HttpGet]
         [Route("obter-cursos")]
-        public async Task<ActionResult<IEnumerable<CursosDto>>> ObterCursos()
+        public async Task<ActionResult<IEnumerable<CursoDetailsDto>>> ObterCursos()
         {
             var cursos = await _cursoQueries.ObterCursos();
             return cursos != null && cursos.Any() ? Ok(cursos) : NoContent();
@@ -43,7 +43,7 @@ namespace GestaoAcademica.WebApi.Controllers
 
         [HttpGet]
         [Route("obter-cursos-disciplinas")]
-        public async Task<ActionResult<IEnumerable<CursosDisciplinasDto>>> ObterCursosDisciplinas()
+        public async Task<ActionResult<IEnumerable<CursosDisciplinasDetailsDto>>> ObterCursosDisciplinas()
         {
             var cursosDisciplinas = await _cursoQueries.ObterCursosDisciplinas();
             return cursosDisciplinas != null && cursosDisciplinas.Any() ? Ok(cursosDisciplinas) : NoContent();
@@ -51,7 +51,7 @@ namespace GestaoAcademica.WebApi.Controllers
 
         [HttpPost]
         [Route("cadastrar-curso")]
-        public async Task CadastrarCurso(CursoDto cursoDto)
+        public async Task CadastrarCurso(CursoCreateEditDto cursoDto)
         {
             var command = new CadastrarCursoCommand(
                 cursoDto.Nome,
@@ -81,7 +81,7 @@ namespace GestaoAcademica.WebApi.Controllers
 
         [HttpPost]
         [Route("cadastrar-disciplina")]
-        public async Task CadastrarDisciplina(DisciplinaCursoDto disciplinaDto)
+        public async Task CadastrarDisciplina(DisciplinaCreateEditDto disciplinaDto)
         {
             var command = new CadastrarDisciplinaCommand(
                 disciplinaDto.Nome,

@@ -4,8 +4,8 @@ namespace GestaoAcademica.Cursos.Application.Queries
 {
     public interface ICursoQueries
     {
-        Task<CursosDto> ObterCursoPorId(Guid idCurso);
-        Task<IEnumerable<CursosDisciplinasDto>> ObterCursosDisciplinas();
-        Task<IEnumerable<CursosDto>> ObterCursos();
+        Task<CursoDetailsDto> ObterCursoPorId(Guid idCurso);
+        Task<IEnumerable<CursosDisciplinasDetailsDto>> ObterCursosDisciplinas();
+        Task<IEnumerable<CursoDetailsDto>> ObterCursos();
     }
 }
