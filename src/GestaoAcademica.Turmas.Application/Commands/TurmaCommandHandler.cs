@@ -1,6 +1,7 @@
 ﻿using GestaoAcademica.Core.Communication.Mediator;
 using GestaoAcademica.Core.Messages;
 using GestaoAcademica.Core.Messages.CommonMessages.Notifications;
+using GestaoAcademica.Turmas.Domain.Events;
 using GestaoAcademica.Turmas.Domain.Interfaces;
 using GestaoAcademica.Turmas.Domain.Models;
 using MediatR;
@@ -51,7 +52,14 @@ namespace GestaoAcademica.Turmas.Application.Commands
             turma.MatricularAluno(alunoCursante);
 
             _turmaRepository.AdicionarAlunoCursante(alunoCursante);
-            return await _turmaRepository.UnitOfWork.Commit();
+            var result = await _turmaRepository.UnitOfWork.Commit();
+
+            if (result)
+            {
+                await _mediatorHandler.PublicarEvento(new NovoAlunoMatriculadoEvent(turma.Id, alunoCursante.NomeAluno, turma.NomeCurso));
+            }
+
+            return result;
         }
 
         private bool ValidarComando(Command message)

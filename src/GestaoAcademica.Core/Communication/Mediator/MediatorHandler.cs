@@ -22,5 +22,10 @@ namespace GestaoAcademica.Core.Communication.Mediator
         {
             await _mediatr.Publish(notificacao);
         }
+
+        public async Task PublicarEvento<T>(T evento) where T : Event
+        {
+            await _mediatr.Publish(evento);
+        }
     }
 }

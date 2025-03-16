@@ -19,6 +19,7 @@ using GestaoAcademica.Turmas.Application.Commands;
 using GestaoAcademica.Turmas.Application.Queries;
 using GestaoAcademica.Turmas.Data;
 using GestaoAcademica.Turmas.Data.Repository;
+using GestaoAcademica.Turmas.Domain.Events;
 using GestaoAcademica.Turmas.Domain.Interfaces;
 using MediatR;
 
@@ -68,6 +69,7 @@ namespace GestaoAcademica.WebApi.Setup
             services.AddScoped<ITurmaRepository, TurmaRepository>();
             services.AddScoped<IRequestHandler<AbrirTurmaCommand, bool>, TurmaCommandHandler>();
             services.AddScoped<IRequestHandler<MatricularAlunoCommand, bool>, TurmaCommandHandler>();
+            services.AddScoped<INotificationHandler<NovoAlunoMatriculadoEvent>, TurmaEventHandler>();
             services.AddScoped<ITurmaQueries, TurmaQueries>();
         }
     }

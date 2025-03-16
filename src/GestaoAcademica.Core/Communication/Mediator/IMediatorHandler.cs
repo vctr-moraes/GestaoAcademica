@@ -7,5 +7,6 @@ namespace GestaoAcademica.Core.Communication.Mediator
     {
         Task<bool> EnviarComando<T>(T comando) where T : Command;
         Task PublicarNotificacao<T>(T notificacao) where T : DomainNotification;
+        Task PublicarEvento<T>(T evento) where T : Event;
     }
 }
