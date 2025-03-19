@@ -26,6 +26,14 @@ namespace GestaoAcademica.WebApi.Controllers
         }
 
         [HttpGet]
+        [Route("obter-aluno")]
+        public async Task<ActionResult<AlunosDetailsDto>> ObterAluno(Guid idAluno)
+        {
+            var aluno = await _alunoQueries.ObterAlunoPorId(idAluno);
+            return aluno != null ? Ok(aluno) : NotFound();
+        }
+
+        [HttpGet]
         [Route("obter-alunos")]
         public async Task<ActionResult<IEnumerable<AlunosDetailsDto>>> ObterAlunos()
         {

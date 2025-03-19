@@ -33,6 +33,14 @@ namespace GestaoAcademica.WebApi.Controllers
             return turma != null ? Ok(turma) : NotFound();
         }
 
+        [HttpGet]
+        [Route("obter-turmas")]
+        public async Task<ActionResult<List<TurmaAlunosDetailsDto>>> ObterTurmas()
+        {
+            var turmas = await _turmaQueries.ObterTurmas();
+            return turmas != null ? Ok(turmas) : NotFound();
+        }
+
         [HttpPost]
         [Route("abrir-turma")]
         public async Task AbrirTurma([FromBody] TurmaCreateEditDto turmaDto)

@@ -12,6 +12,23 @@ namespace GestaoAcademica.Alunos.Application.Queries
             _alunoRepository = alunoRepository;
         }
 
+        public async Task<AlunosDetailsDto> ObterAlunoPorId(Guid idAluno)
+        {
+            var aluno = await _alunoRepository.ObterPorId(idAluno);
+
+            if (aluno == null) return null;
+
+            return new AlunosDetailsDto
+            {
+                Id = aluno.Id,
+                Nome = aluno.Nome,
+                DataNascimento = aluno.DataNascimento,
+                Status = aluno.Status.ToString(),
+                DataCadastro = aluno.DataCadastro,
+                NumeroDocumento = aluno.NumeroDocumento
+            };
+        }
+
         public async Task<IEnumerable<AlunosDetailsDto>> ObterAlunos()
         {
             var alunos = await _alunoRepository.ObterTodos();

@@ -43,7 +43,7 @@ namespace GestaoAcademica.Turmas.Data.Repository
 
         public async Task<IEnumerable<Turma>> ObterTodos()
         {
-            return await _context.Turmas.AsNoTracking().ToListAsync();
+            return await _context.Turmas.Include(x => x.Alunos).AsNoTracking().ToListAsync();
         }
 
         public async Task<AlunoCursante> ObterAlunoCursantePorId(Guid id)

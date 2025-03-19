@@ -20,12 +20,14 @@ namespace GestaoAcademica.Turmas.Application.Queries
 
             var turmaDto = new TurmaAlunosDetailsDto
             {
+                Id = turma.Id,
                 DataInicio = turma.DataInicio,
                 DataEncerramento = turma.DataEncerramento,
                 StatusTurma = turma.StatusTurma,
                 NomeCurso = turma.NomeCurso,
                 Alunos = turma.Alunos.Select(a => new AlunoCursanteDetailsDto
                 {
+                    IdAluno = a.Id,
                     NomeAluno = a.NomeAluno,
                     DataEntrada = a.DataEntrada,
                     DataSaida = a.DataSaida,
@@ -35,6 +37,31 @@ namespace GestaoAcademica.Turmas.Application.Queries
             };
 
             return turmaDto;
+        }
+
+        public async Task<List<TurmaAlunosDetailsDto>> ObterTurmas()
+        {
+            var turmas = await _turmaRepository.ObterTodos();
+
+            if (!turmas.Any()) return null;
+
+            return turmas.Select(x => new TurmaAlunosDetailsDto
+            {
+                Id = x.Id,
+                DataInicio = x.DataInicio,
+                DataEncerramento = x.DataEncerramento,
+                StatusTurma = x.StatusTurma,
+                NomeCurso = x.NomeCurso,
+                Alunos = x.Alunos.Select(a => new AlunoCursanteDetailsDto
+                {
+                    IdAluno = a.Id,
+                    NomeAluno = a.NomeAluno,
+                    DataEntrada = a.DataEntrada,
+                    DataSaida = a.DataSaida,
+                    MotivoSaida = a.MotivoSaida,
+                    StatusAluno = a.StatusAluno
+                }).ToList()
+            }).ToList();
         }
     }
 }
