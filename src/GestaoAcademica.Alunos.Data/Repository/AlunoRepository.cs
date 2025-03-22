@@ -32,7 +32,10 @@ namespace GestaoAcademica.Alunos.Data.Repository
 
         public async Task<Aluno> ObterPorId(Guid id)
         {
-            return await _context.Alunos.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+            return await _context.Alunos
+                .Include(x => x.Endereco)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<IEnumerable<Aluno>> ObterTodos()

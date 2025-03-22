@@ -40,6 +40,24 @@ namespace GestaoAcademica.Alunos.Domain.Models
 
         public Status TornarInativo() => Status = Status.Inativo; // Aluno não cursante.
 
+        public void AtualizarAluno(
+            string nome,
+            string numeroDocumento,
+            DateOnly dataNascimento,
+            Endereco endereco,
+            string nomePai,
+            string nomeMae)
+        {
+            Nome = nome;
+            NumeroDocumento = numeroDocumento;
+            DataNascimento = dataNascimento;
+            Endereco = endereco;
+            NomePai = nomePai;
+            NomeMae = nomeMae;
+
+            Validar();
+        }
+
         public void Validar()
         {
             Validacoes.ValidarSeVazio(Nome, "O campo nome não pode estar vazio.");

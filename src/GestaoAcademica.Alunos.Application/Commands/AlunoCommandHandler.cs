@@ -7,7 +7,9 @@ using MediatR;
 
 namespace GestaoAcademica.Alunos.Application.Commands
 {
-    public class AlunoCommandHandler : IRequestHandler<CadastrarAlunoCommand, bool>, IRequestHandler<ExcluirAlunoCommand, bool>
+    public class AlunoCommandHandler : IRequestHandler<CadastrarAlunoCommand, bool>,
+                                       IRequestHandler<ExcluirAlunoCommand, bool>,
+                                       IRequestHandler<AtualizarAlunoCommand, bool>
     {
         private readonly IAlunoRepository _alunoRepository;
         private readonly IMediatorHandler _mediatorHandler;
@@ -51,6 +53,30 @@ namespace GestaoAcademica.Alunos.Application.Commands
             }
 
             _alunoRepository.Excluir(aluno);
+            return await _alunoRepository.UnitOfWork.Commit();
+        }
+
+        public async Task<bool> Handle(AtualizarAlunoCommand message, CancellationToken cancellationToken)
+        {
+            if (!ValidarComando(message)) return false;
+
+            var aluno = await _alunoRepository.ObterPorId(message.Id);
+
+            if (aluno == null)
+            {
+                await _mediatorHandler.PublicarNotificacao(new DomainNotification("aluno", "Aluno não encontrado."));
+                return false;
+            }
+
+            aluno.AtualizarAluno(
+                message.Nome,
+                message.NumeroDocumento,
+                message.DataNascimento,
+                message.Endereco,
+                message.NomePai,
+                message.NomeMae);
+
+            _alunoRepository.Atualizar(aluno);
             return await _alunoRepository.UnitOfWork.Commit();
         }
 

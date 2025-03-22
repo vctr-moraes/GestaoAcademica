@@ -25,7 +25,18 @@ namespace GestaoAcademica.Alunos.Application.Queries
                 DataNascimento = aluno.DataNascimento,
                 Status = aluno.Status.ToString(),
                 DataCadastro = aluno.DataCadastro,
-                NumeroDocumento = aluno.NumeroDocumento
+                NumeroDocumento = aluno.NumeroDocumento,
+                NomePai = aluno.NomePai,
+                NomeMae = aluno.NomeMae,
+                Endereco = new EnderecoDetailsDto
+                {
+                    Logradouro = aluno.Endereco.Logradouro,
+                    Bairro = aluno.Endereco.Bairro,
+                    Cidade = aluno.Endereco.Cidade,
+                    Pais = aluno.Endereco.Pais,
+                    Cep = aluno.Endereco.Cep,
+                    Referencia = aluno.Endereco.Referencia
+                }
             };
         }
 
@@ -42,7 +53,18 @@ namespace GestaoAcademica.Alunos.Application.Queries
                 DataNascimento = a.DataNascimento,
                 Status = a.Status.ToString(),
                 DataCadastro = a.DataCadastro,
-                NumeroDocumento = a.NumeroDocumento
+                NumeroDocumento = a.NumeroDocumento,
+                NomePai = a.NomePai,
+                NomeMae = a.NomeMae,
+                Endereco = new EnderecoDetailsDto
+                {
+                    Logradouro = a.Endereco.Logradouro,
+                    Bairro = a.Endereco.Bairro,
+                    Cidade = a.Endereco.Cidade,
+                    Pais = a.Endereco.Pais,
+                    Cep = a.Endereco.Cep,
+                    Referencia = a.Endereco.Referencia
+                }
             });
         }
     }

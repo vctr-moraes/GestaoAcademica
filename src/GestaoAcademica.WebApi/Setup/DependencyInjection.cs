@@ -1,5 +1,7 @@
 ﻿using GestaoAcademica.Alunos.Application.Commands;
+using GestaoAcademica.Alunos.Application.Interfaces;
 using GestaoAcademica.Alunos.Application.Queries;
+using GestaoAcademica.Alunos.Application.Services;
 using GestaoAcademica.Alunos.Data;
 using GestaoAcademica.Alunos.Data.Repository;
 using GestaoAcademica.Alunos.Domain.Interfaces;
@@ -60,8 +62,10 @@ namespace GestaoAcademica.WebApi.Setup
             // Alunos
             services.AddScoped<AlunoContext>();
             services.AddScoped<IAlunoRepository, AlunoRepository>();
+            services.AddScoped<IAlunoAppService, AlunoAppService>();
             services.AddScoped<IRequestHandler<CadastrarAlunoCommand, bool>, AlunoCommandHandler>();
             services.AddScoped<IRequestHandler<ExcluirAlunoCommand, bool>, AlunoCommandHandler>();
+            services.AddScoped<IRequestHandler<AtualizarAlunoCommand, bool>, AlunoCommandHandler>();
             services.AddScoped<IAlunoQueries, AlunoQueries>();
 
             // Turma

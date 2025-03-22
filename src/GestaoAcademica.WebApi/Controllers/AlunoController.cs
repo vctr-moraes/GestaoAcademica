@@ -1,4 +1,5 @@
 ﻿using GestaoAcademica.Alunos.Application.Commands;
+using GestaoAcademica.Alunos.Application.Interfaces;
 using GestaoAcademica.Alunos.Application.Queries;
 using GestaoAcademica.Alunos.Application.Queries.Dtos;
 using GestaoAcademica.Core.Communication.Mediator;
@@ -15,14 +16,17 @@ namespace GestaoAcademica.WebApi.Controllers
     {
         private readonly IMediatorHandler _mediatorHandler;
         private readonly IAlunoQueries _alunoQueries;
+        private readonly IAlunoAppService _alunoAppService;
 
         public AlunoController(
             IMediatorHandler mediatorHandler,
             IAlunoQueries alunoQueries,
+            IAlunoAppService alunoAppService,
             INotificationHandler<DomainNotification> notifications) : base(mediatorHandler, notifications)
         {
             _mediatorHandler = mediatorHandler;
             _alunoQueries = alunoQueries;
+            _alunoAppService = alunoAppService;
         }
 
         [HttpGet]
@@ -46,6 +50,33 @@ namespace GestaoAcademica.WebApi.Controllers
         public async Task<ActionResult> CadastrarAluno(AlunoCreateEditDto alunoDto)
         {
             var command = new CadastrarAlunoCommand(
+                alunoDto.Nome,
+                alunoDto.NumeroDocumento,
+                alunoDto.DataNascimento,
+                alunoDto.Endereco,
+                alunoDto.NomePai,
+                alunoDto.NomeMae);
+
+            await _mediatorHandler.EnviarComando(command);
+
+            if (OperacaoValida())
+            {
+                return Ok();
+            }
+
+            return BadRequest(ObterMensagensErro());
+        }
+
+        [HttpPut]
+        [Route("editar-aluno")]
+        public async Task<ActionResult> AtualizarAluno(Guid id, AlunoCreateEditDto alunoDto)
+        {
+            var aluno = await _alunoQueries.ObterAlunoPorId(id);
+
+            if (aluno == null) return BadRequest("Aluno não encontrado");
+
+            var command = new AtualizarAlunoCommand(
+                alunoDto.Id,
                 alunoDto.Nome,
                 alunoDto.NumeroDocumento,
                 alunoDto.DataNascimento,

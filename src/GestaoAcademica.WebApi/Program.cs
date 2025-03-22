@@ -1,3 +1,4 @@
+using GestaoAcademica.Alunos.Application.AutoMapper;
 using GestaoAcademica.Alunos.Data;
 using GestaoAcademica.Cursos.Data;
 using GestaoAcademica.Professores.Data;
@@ -38,6 +39,8 @@ namespace GestaoAcademica.WebApi
 
             builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(typeof(Program).Assembly));
 
+            builder.Services.AddAutoMapper(typeof(DomainToDtoMappingProfile), typeof(DtoToDomainMappingProfile));
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -50,7 +53,6 @@ namespace GestaoAcademica.WebApi
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
 
             app.MapControllers();
 

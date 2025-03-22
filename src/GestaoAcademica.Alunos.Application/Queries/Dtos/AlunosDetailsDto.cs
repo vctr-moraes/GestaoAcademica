@@ -8,5 +8,18 @@
         public string? Status { get; set; }
         public DateOnly DataNascimento { get; set; }
         public DateTime DataCadastro { get; set; }
+        public string? NomePai { get; set; }
+        public string? NomeMae { get; set; }
+        public EnderecoDetailsDto? Endereco { get; set; }
+    }
+
+    public class EnderecoDetailsDto
+    {
+        public string? Logradouro { get; set; }
+        public string? Bairro { get; set; }
+        public string? Cidade { get; set; }
+        public string? Pais { get; set; }
+        public string? Cep { get; set; }
+        public string? Referencia { get; set; }
     }
 }
