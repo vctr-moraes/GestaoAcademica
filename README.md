@@ -8,10 +8,12 @@ A arquitetura implementa os padrões de divisão em camadas, CQRS, repositório 
 ## Tecnologias
 Tecnologias utilizadas neste projeto:
 - C#
--  ASP.NET 8
+- ASP.NET 8
 - Entity Framework
 - MediatR
 - FluentValidation
 
 ## Diagrama de Contexto
 ![[alt text](artifacts/diagrama de contexto.png "Diagrama de Contexto")](https://raw.githubusercontent.com/vctr-moraes/GestaoAcademica/refs/heads/master/artifacts/diagrama%20de%20contexto.png)
+
+
