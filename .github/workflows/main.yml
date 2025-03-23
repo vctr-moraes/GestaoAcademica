@@ -19,7 +19,7 @@ jobs:
 
       - name: Annotate
         # You may pin to the exact commit or the version.
-        uses: JetBrains/ReSharper-InspectCode@v0.3
+        uses: JetBrains/ReSharper-InspectCode@v3
         with:
           solution: ./GestaoAcademica.sln
 
