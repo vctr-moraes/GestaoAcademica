@@ -1,5 +1,6 @@
 ﻿using GestaoAcademica.Core.Communication.Mediator;
 using GestaoAcademica.Core.Messages;
+using GestaoAcademica.Core.Messages.CommonMessages.IntegrationEvents;
 using GestaoAcademica.Core.Messages.CommonMessages.Notifications;
 using GestaoAcademica.Turmas.Domain.Events;
 using GestaoAcademica.Turmas.Domain.Interfaces;
@@ -57,6 +58,10 @@ namespace GestaoAcademica.Turmas.Application.Commands
             if (result)
             {
                 await _mediatorHandler.PublicarEvento(new NovoAlunoMatriculadoEvent(turma.Id, alunoCursante.NomeAluno, turma.NomeCurso));
+
+                // Evento de integração entre o contexto de Turmas e o contexto de Alunos.
+                // Em uma arquitetura distribuída, poderia ser colocado em uma fila.
+                await _mediatorHandler.PublicarEvento(new AtualizarStatusNovoAlunoMatriculadoEvent(message.IdAluno));
             }
 
             return result;

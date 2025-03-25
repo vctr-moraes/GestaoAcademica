@@ -1,4 +1,5 @@
 ﻿using GestaoAcademica.Core.Data;
+using GestaoAcademica.Core.Messages;
 using GestaoAcademica.Turmas.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,6 +14,7 @@ namespace GestaoAcademica.Turmas.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Ignore<Event>();
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(TurmaContext).Assembly);
 
             foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))

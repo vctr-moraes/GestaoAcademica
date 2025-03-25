@@ -1,4 +1,5 @@
 ﻿using GestaoAcademica.Core.Data;
+using GestaoAcademica.Core.Messages;
 using GestaoAcademica.Professores.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,6 +13,7 @@ namespace GestaoAcademica.Professores.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Ignore<Event>();
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ProfessorContext).Assembly);
 
             foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))

@@ -1,5 +1,6 @@
 ﻿using GestaoAcademica.Alunos.Domain.Models;
 using GestaoAcademica.Core.Data;
+using GestaoAcademica.Core.Messages;
 using Microsoft.EntityFrameworkCore;
 
 namespace GestaoAcademica.Alunos.Data
@@ -12,6 +13,7 @@ namespace GestaoAcademica.Alunos.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Ignore<Event>();
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(AlunoContext).Assembly);
 
             foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))

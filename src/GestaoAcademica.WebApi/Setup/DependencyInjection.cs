@@ -4,8 +4,10 @@ using GestaoAcademica.Alunos.Application.Queries;
 using GestaoAcademica.Alunos.Application.Services;
 using GestaoAcademica.Alunos.Data;
 using GestaoAcademica.Alunos.Data.Repository;
+using GestaoAcademica.Alunos.Domain.Events;
 using GestaoAcademica.Alunos.Domain.Interfaces;
 using GestaoAcademica.Core.Communication.Mediator;
+using GestaoAcademica.Core.Messages.CommonMessages.IntegrationEvents;
 using GestaoAcademica.Core.Messages.CommonMessages.Notifications;
 using GestaoAcademica.Cursos.Application.Commands;
 using GestaoAcademica.Cursos.Application.Queries;
@@ -66,6 +68,7 @@ namespace GestaoAcademica.WebApi.Setup
             services.AddScoped<IRequestHandler<CadastrarAlunoCommand, bool>, AlunoCommandHandler>();
             services.AddScoped<IRequestHandler<ExcluirAlunoCommand, bool>, AlunoCommandHandler>();
             services.AddScoped<IRequestHandler<AtualizarAlunoCommand, bool>, AlunoCommandHandler>();
+            services.AddScoped<INotificationHandler<AtualizarStatusNovoAlunoMatriculadoEvent>, AlunoEventHandler>();
             services.AddScoped<IAlunoQueries, AlunoQueries>();
 
             // Turma
