@@ -16,4 +16,5 @@ Tecnologias utilizadas neste projeto:
 ## Diagrama de Contexto
 ![[alt text](artifacts/diagrama de contexto.png "Diagrama de Contexto")](https://raw.githubusercontent.com/vctr-moraes/GestaoAcademica/refs/heads/master/artifacts/diagrama%20de%20contexto.png)
 
-
+## Super-Linter Badge
+[![Super-Linter](https://github.com/vctr-moraes/GestaoAcademica/actions/workflows/main.yml/badge.svg)](https://github.com/marketplace/actions/super-linter)
