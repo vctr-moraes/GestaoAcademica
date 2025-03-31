@@ -51,7 +51,7 @@ namespace GestaoAcademica.WebApi.Controllers
 
         [HttpPost]
         [Route("cadastrar-curso")]
-        public async Task CadastrarCurso(CursoCreateEditDto cursoDto)
+        public async Task<ActionResult> CadastrarCurso(CursoCreateEditDto cursoDto)
         {
             var command = new CadastrarCursoCommand(
                 cursoDto.Nome,
@@ -62,6 +62,13 @@ namespace GestaoAcademica.WebApi.Controllers
                 cursoDto.Modalidade);
 
             await _mediatorHandler.EnviarComando(command);
+
+            if (OperacaoValida())
+            {
+                return Ok();
+            }
+
+            return BadRequest(ObterMensagensErro());
         }
 
         [HttpDelete]
@@ -81,7 +88,7 @@ namespace GestaoAcademica.WebApi.Controllers
 
         [HttpPost]
         [Route("cadastrar-disciplina")]
-        public async Task CadastrarDisciplina(DisciplinaCreateEditDto disciplinaDto)
+        public async Task<ActionResult> CadastrarDisciplina(DisciplinaCreateEditDto disciplinaDto)
         {
             var command = new CadastrarDisciplinaCommand(
                 disciplinaDto.Nome,
@@ -89,6 +96,13 @@ namespace GestaoAcademica.WebApi.Controllers
                 disciplinaDto.CargaHoraria);
 
             await _mediatorHandler.EnviarComando(command);
+
+            if (OperacaoValida())
+            {
+                return Ok();
+            }
+
+            return BadRequest(ObterMensagensErro());
         }
 
         [HttpDelete]

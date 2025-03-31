@@ -43,7 +43,7 @@ namespace GestaoAcademica.WebApi.Controllers
 
         [HttpPost]
         [Route("cadastrar-professor")]
-        public async Task CadastrarProfessor(ProfessorCreateEditDto professorDto)
+        public async Task<ActionResult> CadastrarProfessor(ProfessorCreateEditDto professorDto)
         {
             var command = new CadastrarProfessorCommand(
                 professorDto.Nome,
@@ -52,6 +52,13 @@ namespace GestaoAcademica.WebApi.Controllers
                 professorDto.Endereco);
 
             await _mediatorHandler.EnviarComando(command);
+
+            if (OperacaoValida())
+            {
+                return Ok();
+            }
+
+            return BadRequest(ObterMensagensErro());
         }
 
         [HttpDelete]

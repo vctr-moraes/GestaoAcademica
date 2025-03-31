@@ -43,11 +43,17 @@ namespace GestaoAcademica.WebApi.Controllers
 
         [HttpPost]
         [Route("abrir-turma")]
-        public async Task AbrirTurma([FromBody] TurmaCreateEditDto turmaDto)
+        public async Task<ActionResult> AbrirTurma([FromBody] TurmaCreateEditDto turmaDto)
         {
             var command = new AbrirTurmaCommand(turmaDto.DataInicio, turmaDto.IdCurso, turmaDto.NomeCurso);
-
             await _mediatorHandler.EnviarComando(command);
+
+            if (OperacaoValida())
+            {
+                return Ok();
+            }
+
+            return BadRequest(ObterMensagensErro());
         }
 
         [HttpPost]
