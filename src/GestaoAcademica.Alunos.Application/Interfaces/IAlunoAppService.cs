@@ -2,8 +2,5 @@
 
 namespace GestaoAcademica.Alunos.Application.Interfaces
 {
-    public interface IAlunoAppService : IDisposable
-    {
-        
-    }
+    public interface IAlunoAppService : IDisposable { }
 }
