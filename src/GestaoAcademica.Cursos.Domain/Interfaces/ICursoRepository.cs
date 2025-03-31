@@ -8,7 +8,7 @@ namespace GestaoAcademica.Cursos.Domain.Interfaces
         Task<Curso> ObterPorId(Guid id);
 
         Task<IEnumerable<Curso>> ObterTodos();
-        
+
         Task<IEnumerable<Curso>> ObterCursosDisciplinas();
 
         void Adicionar(Curso curso);
