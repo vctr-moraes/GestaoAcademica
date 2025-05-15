@@ -23,7 +23,16 @@ namespace GestaoAcademica.Professores.Application.Queries
                 Id = professor.Id,
                 Nome = professor.Nome,
                 DataNascimento = professor.DataNascimento,
-                NumeroDocumento = professor.NumeroDocumento
+                NumeroDocumento = professor.NumeroDocumento,
+                Endereco = new EnderecoProfessorDetailsDto
+                {
+                    Logradouro = professor.Endereco.Logradouro,
+                    Bairro = professor.Endereco.Bairro,
+                    Cidade = professor.Endereco.Cidade,
+                    Pais = professor.Endereco.Pais,
+                    Cep = professor.Endereco.Cep,
+                    Referencia = professor.Endereco.Referencia
+                }
             };
         }
 

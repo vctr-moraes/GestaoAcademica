@@ -43,8 +43,10 @@ namespace GestaoAcademica.WebApi.Setup
             services.AddScoped<CursoContext>();
             services.AddScoped<ICursoRepository, CursoRepository>();
             services.AddScoped<IRequestHandler<CadastrarCursoCommand, bool>, CursoCommandHandler>();
+            services.AddScoped<IRequestHandler<AtualizarCursoCommand, bool>, CursoCommandHandler>();
             services.AddScoped<IRequestHandler<ExcluirCursoCommand, bool>, CursoCommandHandler>();
             services.AddScoped<IRequestHandler<CadastrarDisciplinaCommand, bool>, CursoCommandHandler>();
+            services.AddScoped<IRequestHandler<AtualizarDisciplinaCommand, bool>, CursoCommandHandler>();
             services.AddScoped<IRequestHandler<ExcluirDisciplinaCommand, bool>, CursoCommandHandler>();
             services.AddScoped<IRequestHandler<VincularDisciplinaCommand, bool>, CursoCommandHandler>();
             services.AddScoped<IRequestHandler<DesvincularDisciplinaCommand, bool>, CursoCommandHandler>();
@@ -58,6 +60,7 @@ namespace GestaoAcademica.WebApi.Setup
             services.AddScoped<ProfessorContext>();
             services.AddScoped<IProfessorRepository, ProfessorRepository>();
             services.AddScoped<IRequestHandler<CadastrarProfessorCommand, bool>, ProfessorCommandHandler>();
+            services.AddScoped<IRequestHandler<AtualizarProfessorCommand, bool>, ProfessorCommandHandler>();
             services.AddScoped<IRequestHandler<ExcluirProfessorCommand, bool>, ProfessorCommandHandler>();
             services.AddScoped<IProfessorQueries, ProfessorQueries>();
 

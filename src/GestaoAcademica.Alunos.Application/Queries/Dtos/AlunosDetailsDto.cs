@@ -10,10 +10,10 @@
         public DateTime DataCadastro { get; set; }
         public string? NomePai { get; set; }
         public string? NomeMae { get; set; }
-        public EnderecoDetailsDto? Endereco { get; set; }
+        public EnderecoAlunoDetailsDto? Endereco { get; set; }
     }
 
-    public class EnderecoDetailsDto
+    public class EnderecoAlunoDetailsDto
     {
         public string? Logradouro { get; set; }
         public string? Bairro { get; set; }

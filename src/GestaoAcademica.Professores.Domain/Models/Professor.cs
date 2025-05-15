@@ -34,11 +34,26 @@ namespace GestaoAcademica.Professores.Domain.Models
 
         public Status TornarInativo() => Status = Status.Inativo;
 
+        public void AtualizarProfessor(
+            string nome,
+            string numeroDocumento,
+            DateOnly dataNascimento,
+            Endereco endereco)
+        {
+            Nome = nome;
+            NumeroDocumento = numeroDocumento;
+            DataNascimento = dataNascimento;
+            Endereco = endereco;
+
+            Validar();
+        }
+
         public void Validar()
         {
             Validacoes.ValidarSeVazio(Nome, "O campo nome não pode estar vazio.");
             Validacoes.ValidarSeVazio(NumeroDocumento, "O campo número do documento não pode estar vazio.");
             Validacoes.ValidarSeNulo(DataNascimento, "O campo data de nascimento não pode estar vazio.");
+            Validacoes.ValidarSeNulo(Endereco, "O endereço não pode estar vazio.");
         }
     }
 }

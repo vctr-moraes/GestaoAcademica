@@ -1,6 +1,5 @@
 ﻿using GestaoAcademica.Cursos.Application.Queries.Dtos;
 using GestaoAcademica.Cursos.Domain.Interfaces;
-using GestaoAcademica.Cursos.Domain.Models;
 
 namespace GestaoAcademica.Cursos.Application.Queries
 {
@@ -23,6 +22,7 @@ namespace GestaoAcademica.Cursos.Application.Queries
             {
                 Id = curso.Id,
                 Nome = curso.Nome,
+                Descricao = curso.Descricao,
                 CargaHoraria = curso.CargaHoraria,
                 DataCriacao = curso.DataCriacao,
                 Grau = curso.Grau.ToString(),
@@ -41,6 +41,7 @@ namespace GestaoAcademica.Cursos.Application.Queries
             {
                 Id = x.Id,
                 Nome = x.Nome,
+                Descricao = x.Descricao,
                 CargaHoraria = x.CargaHoraria,
                 DataCriacao = x.DataCriacao,
                 Grau = x.Grau.ToString(),
@@ -68,10 +69,27 @@ namespace GestaoAcademica.Cursos.Application.Queries
                 {
                     Id = d.Disciplina.Id,
                     Nome = d.Disciplina.Nome,
+                    Descricao = d.Disciplina.Descricao,
                     CargaHoraria = d.Disciplina.CargaHoraria,
                     NomeProfessor = d.Disciplina.NomeProfessor
                 }).ToList()
             });
+        }
+
+        public async Task<DisciplinaDetailsDto> ObterDisciplinaPorId(Guid idDisciplina)
+        {
+            var disciplina = await _cursoRepository.ObterDisciplinaPorId(idDisciplina);
+
+            if (disciplina == null) return null;
+
+            return new DisciplinaDetailsDto
+            {
+                Id = disciplina.Id,
+                Nome = disciplina.Nome,
+                Descricao = disciplina.Descricao,
+                CargaHoraria = disciplina.CargaHoraria,
+                NomeProfessor = disciplina.NomeProfessor
+            };
         }
     }
 }
