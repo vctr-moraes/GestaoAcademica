@@ -65,6 +65,24 @@ namespace GestaoAcademica.Cursos.Domain.Models
             }
         }
 
+        public void AtualizarCurso(
+            string nome,
+            string descricao,
+            string cargaHoraria,
+            DateTime dataCriacao,
+            Grau grau,
+            Modalidade modalidade)
+        {
+            Nome = nome;
+            Descricao = descricao;
+            CargaHoraria = cargaHoraria;
+            DataCriacao = dataCriacao;
+            Grau = grau;
+            Modalidade = modalidade;
+
+            Validar();
+        }
+
         public void Validar()
         {
             Validacoes.ValidarSeVazio(Nome, "O campo nome não pode estar vazio.");

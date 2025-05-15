@@ -28,7 +28,7 @@ namespace GestaoAcademica.Alunos.Application.Queries
                 NumeroDocumento = aluno.NumeroDocumento,
                 NomePai = aluno.NomePai,
                 NomeMae = aluno.NomeMae,
-                Endereco = new EnderecoDetailsDto
+                Endereco = new EnderecoAlunoDetailsDto
                 {
                     Logradouro = aluno.Endereco.Logradouro,
                     Bairro = aluno.Endereco.Bairro,
@@ -56,7 +56,7 @@ namespace GestaoAcademica.Alunos.Application.Queries
                 NumeroDocumento = a.NumeroDocumento,
                 NomePai = a.NomePai,
                 NomeMae = a.NomeMae,
-                Endereco = new EnderecoDetailsDto
+                Endereco = new EnderecoAlunoDetailsDto
                 {
                     Logradouro = a.Endereco.Logradouro,
                     Bairro = a.Endereco.Bairro,

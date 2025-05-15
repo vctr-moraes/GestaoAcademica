@@ -8,7 +8,9 @@ using MediatR;
 namespace GestaoAcademica.Cursos.Application.Commands
 {
     public class CursoCommandHandler : IRequestHandler<CadastrarCursoCommand, bool>,
+                                       IRequestHandler<AtualizarCursoCommand, bool>,
                                        IRequestHandler<CadastrarDisciplinaCommand, bool>,
+                                       IRequestHandler<AtualizarDisciplinaCommand, bool>,
                                        IRequestHandler<VincularDisciplinaCommand, bool>,
                                        IRequestHandler<DesvincularDisciplinaCommand, bool>,
                                        IRequestHandler<AtribuirProfessorCoordenadorCommand, bool>,
@@ -43,6 +45,30 @@ namespace GestaoAcademica.Cursos.Application.Commands
             return await _cursoRepository.UnitOfWork.Commit();
         }
 
+        public async Task<bool> Handle(AtualizarCursoCommand message, CancellationToken cancellationToken)
+        {
+            if (!ValidarComando(message)) return false;
+
+            var curso = await _cursoRepository.ObterPorId(message.Id);
+
+            if (curso == null)
+            {
+                await _mediatorHandler.PublicarNotificacao(new DomainNotification("curso", "Curso não encontrado."));
+                return false;
+            }
+
+            curso.AtualizarCurso(
+                message.Nome,
+                message.Descricao,
+                message.CargaHoraria,
+                message.DataCriacao,
+                (Grau)message.Grau,
+                (Modalidade)message.Modalidade);
+
+            _cursoRepository.Atualizar(curso);
+            return await _cursoRepository.UnitOfWork.Commit();
+        }
+
         public async Task<bool> Handle(ExcluirCursoCommand message, CancellationToken cancellationToken)
         {
             var curso = await _cursoRepository.ObterPorId(message.CursoId);
@@ -64,6 +90,24 @@ namespace GestaoAcademica.Cursos.Application.Commands
             var disciplina = new Disciplina(message.Nome, message.Descricao, message.CargaHoraria);
 
             _cursoRepository.AdicionarDisciplina(disciplina);
+            return await _cursoRepository.UnitOfWork.Commit();
+        }
+
+        public async Task<bool> Handle(AtualizarDisciplinaCommand message, CancellationToken cancellationToken)
+        {
+            if (!ValidarComando(message)) return false;
+
+            var disciplina = await _cursoRepository.ObterDisciplinaPorId(message.Id);
+
+            if (disciplina == null)
+            {
+                await _mediatorHandler.PublicarNotificacao(new DomainNotification("disciplina", "Disciplina não encontrada."));
+                return false;
+            }
+
+            disciplina.AtualizarDisciplina(message.Nome, message.Descricao, message.CargaHoraria);
+
+            _cursoRepository.AtualizarDisciplina(disciplina);
             return await _cursoRepository.UnitOfWork.Commit();
         }
 

@@ -71,6 +71,33 @@ namespace GestaoAcademica.WebApi.Controllers
             return BadRequest(ObterMensagensErro());
         }
 
+        [HttpPut]
+        [Route("editar-curso")]
+        public async Task<ActionResult> AtualizarCurso(Guid idCurso, CursoCreateEditDto cursoDto)
+        {
+            var curso = await _cursoQueries.ObterCursoPorId(idCurso);
+
+            if (curso == null) return BadRequest("Curso não encontrado");
+
+            var command = new AtualizarCursoCommand(
+                cursoDto.Id,
+                cursoDto.Nome,
+                cursoDto.Descricao,
+                cursoDto.CargaHoraria,
+                cursoDto.DataCriacao,
+                cursoDto.Grau,
+                cursoDto.Modalidade);
+
+            await _mediatorHandler.EnviarComando(command);
+
+            if (OperacaoValida())
+            {
+                return Ok();
+            }
+
+            return BadRequest(ObterMensagensErro());
+        }
+
         [HttpDelete]
         [Route("excluir-curso")]
         public async Task<ActionResult> ExcluirCurso(Guid cursoId)
@@ -91,6 +118,30 @@ namespace GestaoAcademica.WebApi.Controllers
         public async Task<ActionResult> CadastrarDisciplina(DisciplinaCreateEditDto disciplinaDto)
         {
             var command = new CadastrarDisciplinaCommand(
+                disciplinaDto.Nome,
+                disciplinaDto.Descricao,
+                disciplinaDto.CargaHoraria);
+
+            await _mediatorHandler.EnviarComando(command);
+
+            if (OperacaoValida())
+            {
+                return Ok();
+            }
+
+            return BadRequest(ObterMensagensErro());
+        }
+
+        [HttpPut]
+        [Route("editar-disciplina")]
+        public async Task<ActionResult> AtualizarDisciplina(Guid idDisciplina, DisciplinaCreateEditDto disciplinaDto)
+        {
+            var disciplina = await _cursoQueries.ObterDisciplinaPorId(idDisciplina);
+
+            if (disciplina == null) return BadRequest("Disciplina não encontrada");
+
+            var command = new AtualizarDisciplinaCommand(
+                disciplinaDto.Id,
                 disciplinaDto.Nome,
                 disciplinaDto.Descricao,
                 disciplinaDto.CargaHoraria);

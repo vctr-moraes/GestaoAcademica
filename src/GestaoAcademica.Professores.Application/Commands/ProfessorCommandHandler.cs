@@ -7,7 +7,9 @@ using MediatR;
 
 namespace GestaoAcademica.Professores.Application.Commands
 {
-    public class ProfessorCommandHandler : IRequestHandler<CadastrarProfessorCommand, bool>, IRequestHandler<ExcluirProfessorCommand, bool>
+    public class ProfessorCommandHandler : IRequestHandler<CadastrarProfessorCommand, bool>,
+                                           IRequestHandler<AtualizarProfessorCommand, bool>,
+                                           IRequestHandler<ExcluirProfessorCommand, bool>
     {
         private readonly IProfessorRepository _professorRepository;
         private readonly IMediatorHandler _mediatorHandler;
@@ -29,6 +31,28 @@ namespace GestaoAcademica.Professores.Application.Commands
                 message.Endereco);
 
             _professorRepository.Adicionar(professor);
+            return await _professorRepository.UnitOfWork.Commit();
+        }
+
+        public async Task<bool> Handle(AtualizarProfessorCommand message, CancellationToken cancellationToken)
+        {
+            if (!ValidarComando(message)) return false;
+
+            var professor = await _professorRepository.ObterPorId(message.Id);
+
+            if (professor == null)
+            {
+                await _mediatorHandler.PublicarNotificacao(new DomainNotification("professor", "Professor não encontrado."));
+                return false;
+            }
+
+            professor.AtualizarProfessor(
+                message.Nome,
+                message.NumeroDocumento,
+                message.DataNascimento,
+                message.Endereco);
+
+            _professorRepository.Atualizar(professor);
             return await _professorRepository.UnitOfWork.Commit();
         }
 

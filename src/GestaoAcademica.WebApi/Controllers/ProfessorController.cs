@@ -61,6 +61,31 @@ namespace GestaoAcademica.WebApi.Controllers
             return BadRequest(ObterMensagensErro());
         }
 
+        [HttpPut]
+        [Route("editar-professor")]
+        public async Task<ActionResult> AtualizarProfessor(Guid idProfessor, ProfessorCreateEditDto professorDto)
+        {
+            var professor = await _professorQueries.ObterProfessor(idProfessor);
+
+            if (professor == null) return BadRequest("Professor não encontrado");
+
+            var command = new AtualizarProfessorCommand(
+                professorDto.Id,
+                professorDto.Nome,
+                professorDto.NumeroDocumento,
+                professorDto.DataNascimento,
+                professorDto.Endereco);
+
+            await _mediatorHandler.EnviarComando(command);
+
+            if (OperacaoValida())
+            {
+                return Ok();
+            }
+
+            return BadRequest(ObterMensagensErro());
+        }
+
         [HttpDelete]
         [Route("excluir-professor")]
         public async Task<ActionResult> ExcluirProfessor(Guid idProfessor)
