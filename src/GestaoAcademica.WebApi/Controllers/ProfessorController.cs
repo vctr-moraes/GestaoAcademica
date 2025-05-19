@@ -29,76 +29,116 @@ namespace GestaoAcademica.WebApi.Controllers
         [Route("obter-professor")]
         public async Task<ActionResult<ProfessorDetailsDto>> ObterProfessor(Guid idProfessor)
         {
-            var professor = await _professorQueries.ObterProfessor(idProfessor);
-            return professor != null ? Ok(professor) : NotFound();
+            try
+            {
+                var professor = await _professorQueries.ObterProfessor(idProfessor);
+                return professor != null ? Ok(professor) : NotFound();
+            }
+            catch (Exception ex)
+            {
+                Console.Write($"Exception gerada: {ex.Message}");
+                throw;
+            }
         }
 
         [HttpGet]
         [Route("obter-professores")]
         public async Task<ActionResult<IEnumerable<ProfessorDetailsDto>>> ObterProfessores()
         {
-            var professores = await _professorQueries.ObterProfessores();
-            return professores != null && professores.Any() ? Ok(professores) : NoContent();
+            try
+            {
+                var professores = await _professorQueries.ObterProfessores();
+                return professores != null && professores.Any() ? Ok(professores) : NoContent();
+            }
+            catch (Exception ex)
+            {
+                Console.Write($"Exception gerada: {ex.Message}");
+                throw;
+            }
         }
 
         [HttpPost]
         [Route("cadastrar-professor")]
         public async Task<ActionResult> CadastrarProfessor(ProfessorCreateEditDto professorDto)
         {
-            var command = new CadastrarProfessorCommand(
-                professorDto.Nome,
-                professorDto.NumeroDocumento,
-                professorDto.DataNascimento,
-                professorDto.Endereco);
-
-            await _mediatorHandler.EnviarComando(command);
-
-            if (OperacaoValida())
+            try
             {
-                return Ok();
-            }
+                var command = new CadastrarProfessorCommand(
+                    professorDto.Nome,
+                    professorDto.NumeroDocumento,
+                    professorDto.DataNascimento,
+                    professorDto.Endereco);
 
-            return BadRequest(ObterMensagensErro());
+                await _mediatorHandler.EnviarComando(command);
+
+                if (OperacaoValida())
+                {
+                    return Ok();
+                }
+
+                return BadRequest(ObterMensagensErro());
+            }
+            catch (Exception ex)
+            {
+                Console.Write($"Exception gerada: {ex.Message}");
+                throw;
+            }
         }
 
         [HttpPut]
         [Route("editar-professor")]
         public async Task<ActionResult> AtualizarProfessor(Guid idProfessor, ProfessorCreateEditDto professorDto)
         {
-            var professor = await _professorQueries.ObterProfessor(idProfessor);
-
-            if (professor == null) return BadRequest("Professor não encontrado");
-
-            var command = new AtualizarProfessorCommand(
-                professorDto.Id,
-                professorDto.Nome,
-                professorDto.NumeroDocumento,
-                professorDto.DataNascimento,
-                professorDto.Endereco);
-
-            await _mediatorHandler.EnviarComando(command);
-
-            if (OperacaoValida())
+            try
             {
-                return Ok();
-            }
+                var professor = await _professorQueries.ObterProfessor(idProfessor);
 
-            return BadRequest(ObterMensagensErro());
+                if (professor == null) return BadRequest("Professor não encontrado");
+
+                var command = new AtualizarProfessorCommand(
+                    professorDto.Id,
+                    professorDto.Nome,
+                    professorDto.NumeroDocumento,
+                    professorDto.DataNascimento,
+                    professorDto.Endereco);
+
+                await _mediatorHandler.EnviarComando(command);
+
+                if (OperacaoValida())
+                {
+                    return Ok();
+                }
+
+                return BadRequest(ObterMensagensErro());
+            }
+            catch (Exception ex)
+            {
+                Console.Write($"Exception gerada: {ex.Message}");
+                throw;
+            }
         }
 
         [HttpDelete]
         [Route("excluir-professor")]
         public async Task<ActionResult> ExcluirProfessor(Guid idProfessor)
         {
-            var command = new ExcluirProfessorCommand(idProfessor);
-            await _mediatorHandler.EnviarComando(command);
-
-            if (OperacaoValida())
+            try
             {
-                return Ok();
-            }
+                var command = new ExcluirProfessorCommand(idProfessor);
+                await _mediatorHandler.EnviarComando(command);
 
-            return BadRequest(ObterMensagensErro());
+                if (OperacaoValida())
+                {
+                    return Ok();
+                }
+
+                return BadRequest(ObterMensagensErro());
+            }
+            catch (Exception ex)
+            {
+                Console.Write($"Exception gerada: {ex.Message}");
+                throw;
+            }
         }
     }
 }

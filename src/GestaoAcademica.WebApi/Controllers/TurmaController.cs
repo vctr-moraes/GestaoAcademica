@@ -29,46 +29,78 @@ namespace GestaoAcademica.WebApi.Controllers
         [Route("obter-turma")]
         public async Task<ActionResult<TurmaAlunosDetailsDto>> ObterTurma(Guid idTurma)
         {
-            var turma = await _turmaQueries.ObterTurmaPorId(idTurma);
-            return turma != null ? Ok(turma) : NotFound();
+            try
+            {
+                var turma = await _turmaQueries.ObterTurmaPorId(idTurma);
+                return turma != null ? Ok(turma) : NotFound();
+            }
+            catch (Exception ex)
+            {
+                Console.Write($"Exception gerada: {ex.Message}");
+                throw;
+            }
         }
 
         [HttpGet]
         [Route("obter-turmas")]
         public async Task<ActionResult<List<TurmaAlunosDetailsDto>>> ObterTurmas()
         {
-            var turmas = await _turmaQueries.ObterTurmas();
-            return turmas != null ? Ok(turmas) : NotFound();
+            try
+            {
+                var turmas = await _turmaQueries.ObterTurmas();
+                return turmas != null ? Ok(turmas) : NotFound();
+            }
+            catch (Exception ex)
+            {
+                Console.Write($"Exception gerada: {ex.Message}");
+                throw;
+            }
         }
 
         [HttpPost]
         [Route("abrir-turma")]
         public async Task<ActionResult> AbrirTurma([FromBody] TurmaCreateEditDto turmaDto)
         {
-            var command = new AbrirTurmaCommand(turmaDto.DataInicio, turmaDto.IdCurso, turmaDto.NomeCurso);
-            await _mediatorHandler.EnviarComando(command);
-
-            if (OperacaoValida())
+            try
             {
-                return Ok();
-            }
+                var command = new AbrirTurmaCommand(turmaDto.DataInicio, turmaDto.IdCurso, turmaDto.NomeCurso);
+                await _mediatorHandler.EnviarComando(command);
 
-            return BadRequest(ObterMensagensErro());
+                if (OperacaoValida())
+                {
+                    return Ok();
+                }
+
+                return BadRequest(ObterMensagensErro());
+            }
+            catch (Exception ex)
+            {
+                Console.Write($"Exception gerada: {ex.Message}");
+                throw;
+            }
         }
 
         [HttpPost]
         [Route("matricular-aluno")]
         public async Task<ActionResult> MatricularAluno(Guid idTurma, Guid idAluno, string nomeAluno)
         {
-            var command = new MatricularAlunoCommand(idTurma, idAluno, nomeAluno);
-            await _mediatorHandler.EnviarComando(command);
-
-            if (OperacaoValida())
+            try
             {
-                return Ok();
-            }
+                var command = new MatricularAlunoCommand(idTurma, idAluno, nomeAluno);
+                await _mediatorHandler.EnviarComando(command);
 
-            return BadRequest(ObterMensagensErro());
+                if (OperacaoValida())
+                {
+                    return Ok();
+                }
+
+                return BadRequest(ObterMensagensErro());
+            }
+            catch (Exception ex)
+            {
+                Console.Write($"Exception gerada: {ex.Message}");
+                throw;
+            }
         }
     }
 }

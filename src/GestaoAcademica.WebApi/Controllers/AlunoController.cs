@@ -33,80 +33,120 @@ namespace GestaoAcademica.WebApi.Controllers
         [Route("obter-aluno")]
         public async Task<ActionResult<AlunosDetailsDto>> ObterAluno(Guid idAluno)
         {
-            var aluno = await _alunoQueries.ObterAlunoPorId(idAluno);
-            return aluno != null ? Ok(aluno) : NotFound();
+            try
+            {
+                var aluno = await _alunoQueries.ObterAlunoPorId(idAluno);
+                return aluno != null ? Ok(aluno) : NotFound();
+            }
+            catch (Exception ex)
+            {
+                Console.Write($"Exception gerada: {ex.Message}");
+                throw;
+            }
         }
 
         [HttpGet]
         [Route("obter-alunos")]
         public async Task<ActionResult<IEnumerable<AlunosDetailsDto>>> ObterAlunos()
         {
-            var alunos = await _alunoQueries.ObterAlunos();
-            return alunos != null && alunos.Any() ? Ok(alunos) : NoContent();
+            try
+            {
+                var alunos = await _alunoQueries.ObterAlunos();
+                return alunos != null && alunos.Any() ? Ok(alunos) : NoContent();
+            }
+            catch (Exception ex)
+            {
+                Console.Write($"Exception gerada: {ex.Message}");
+                throw;
+            }
         }
 
         [HttpPost]
         [Route("cadastrar-aluno")]
         public async Task<ActionResult> CadastrarAluno(AlunoCreateEditDto alunoDto)
         {
-            var command = new CadastrarAlunoCommand(
-                alunoDto.Nome,
-                alunoDto.NumeroDocumento,
-                alunoDto.DataNascimento,
-                alunoDto.Endereco,
-                alunoDto.NomePai,
-                alunoDto.NomeMae);
-
-            await _mediatorHandler.EnviarComando(command);
-
-            if (OperacaoValida())
+            try
             {
-                return Ok();
-            }
+                var command = new CadastrarAlunoCommand(
+                    alunoDto.Nome,
+                    alunoDto.NumeroDocumento,
+                    alunoDto.DataNascimento,
+                    alunoDto.Endereco,
+                    alunoDto.NomePai,
+                    alunoDto.NomeMae);
 
-            return BadRequest(ObterMensagensErro());
+                await _mediatorHandler.EnviarComando(command);
+
+                if (OperacaoValida())
+                {
+                    return Ok();
+                }
+
+                return BadRequest(ObterMensagensErro());
+            }
+            catch (Exception ex)
+            {
+                Console.Write($"Exception gerada: {ex.Message}");
+                throw;
+            }
         }
 
         [HttpPut]
         [Route("editar-aluno")]
         public async Task<ActionResult> AtualizarAluno(Guid id, AlunoCreateEditDto alunoDto)
         {
-            var aluno = await _alunoQueries.ObterAlunoPorId(id);
-
-            if (aluno == null) return BadRequest("Aluno não encontrado");
-
-            var command = new AtualizarAlunoCommand(
-                alunoDto.Id,
-                alunoDto.Nome,
-                alunoDto.NumeroDocumento,
-                alunoDto.DataNascimento,
-                alunoDto.Endereco,
-                alunoDto.NomePai,
-                alunoDto.NomeMae);
-
-            await _mediatorHandler.EnviarComando(command);
-
-            if (OperacaoValida())
+            try
             {
-                return Ok();
-            }
+                var aluno = await _alunoQueries.ObterAlunoPorId(id);
 
-            return BadRequest(ObterMensagensErro());
+                if (aluno == null) return BadRequest("Aluno não encontrado");
+
+                var command = new AtualizarAlunoCommand(
+                    alunoDto.Id,
+                    alunoDto.Nome,
+                    alunoDto.NumeroDocumento,
+                    alunoDto.DataNascimento,
+                    alunoDto.Endereco,
+                    alunoDto.NomePai,
+                    alunoDto.NomeMae);
+
+                await _mediatorHandler.EnviarComando(command);
+
+                if (OperacaoValida())
+                {
+                    return Ok();
+                }
+
+                return BadRequest(ObterMensagensErro());
+            }
+            catch (Exception ex)
+            {
+                Console.Write($"Exception gerada: {ex.Message}");
+                throw;
+            }
         }
 
         [HttpDelete]
         [Route("excluir-aluno")]
         public async Task<ActionResult> ExcluirAluno(Guid idAluno)
         {
-            var command = new ExcluirAlunoCommand(idAluno);
-            await _mediatorHandler.EnviarComando(command);
-
-            if (OperacaoValida())
+            try
             {
-                return Ok();
-            }
+                var command = new ExcluirAlunoCommand(idAluno);
+                await _mediatorHandler.EnviarComando(command);
 
-            return BadRequest(ObterMensagensErro());
+                if (OperacaoValida())
+                {
+                    return Ok();
+                }
+
+                return BadRequest(ObterMensagensErro());
+            }
+            catch (Exception ex)
+            {
+                Console.Write($"Exception gerada: {ex.Message}");
+                throw;
+            }
         }
     }
 }
