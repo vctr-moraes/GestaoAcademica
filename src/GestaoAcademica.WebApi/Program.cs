@@ -5,6 +5,9 @@ using GestaoAcademica.Professores.Data;
 using GestaoAcademica.Turmas.Data;
 using GestaoAcademica.WebApi.Setup;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
+using Serilog.Events;
+using Serilog.Sinks;
 
 namespace GestaoAcademica.WebApi
 {
@@ -61,6 +64,11 @@ namespace GestaoAcademica.WebApi
                 app.UseDeveloperExceptionPage();
                 app.UseMigrationsEndPoint();
             }
+
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Information()
+                .WriteTo.Console(outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss} [{Level}] {Message} {Properties:j}{NewLine}{Exception}")
+                .CreateLogger();
 
             app.Run();
         }
