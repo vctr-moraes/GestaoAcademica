@@ -6,6 +6,7 @@ using GestaoAcademica.Professores.Application.Queries;
 using GestaoAcademica.Professores.Application.Queries.Dtos;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 
 namespace GestaoAcademica.WebApi.Controllers
 {
@@ -15,14 +16,17 @@ namespace GestaoAcademica.WebApi.Controllers
     {
         private readonly IMediatorHandler _mediatorHandler;
         private readonly IProfessorQueries _professorQueries;
+        private readonly ILogger<ProfessorController> _logger;
 
         public ProfessorController(
             IMediatorHandler mediatorHandler,
             IProfessorQueries professorQueries,
-            INotificationHandler<DomainNotification> notifications) : base(mediatorHandler, notifications)
+            INotificationHandler<DomainNotification> notifications,
+            ILogger<ProfessorController> logger) : base(mediatorHandler, notifications)
         {
             _mediatorHandler = mediatorHandler;
             _professorQueries = professorQueries;
+            _logger = logger;
         }
 
         [HttpGet]
@@ -32,11 +36,14 @@ namespace GestaoAcademica.WebApi.Controllers
             try
             {
                 var professor = await _professorQueries.ObterProfessor(idProfessor);
+
+                _logger.LogInformation(message: $"Sucesso ao obter professor.", args: [JsonSerializer.Serialize(professor), DateTime.Now, nameof(GetType)]);
+
                 return professor != null ? Ok(professor) : NotFound();
             }
             catch (Exception ex)
             {
-                Console.Write($"Exception gerada: {ex.Message}");
+                _logger.LogCritical(exception: ex, message: "Ocorreu uma exceção ao obter professor.", args: [DateTime.Now, nameof(GetType)]);
                 throw;
             }
         }
@@ -48,11 +55,14 @@ namespace GestaoAcademica.WebApi.Controllers
             try
             {
                 var professores = await _professorQueries.ObterProfessores();
+
+                _logger.LogInformation(message: $"Sucesso ao obter professores.", args: [JsonSerializer.Serialize(professores), DateTime.Now, nameof(GetType)]);
+
                 return professores != null && professores.Any() ? Ok(professores) : NoContent();
             }
             catch (Exception ex)
             {
-                Console.Write($"Exception gerada: {ex.Message}");
+                _logger.LogCritical(exception: ex, message: "Ocorreu uma exceção ao obter professores.", args: [DateTime.Now, nameof(GetType)]);
                 throw;
             }
         }
@@ -73,14 +83,18 @@ namespace GestaoAcademica.WebApi.Controllers
 
                 if (OperacaoValida())
                 {
+                    _logger.LogInformation(message: $"Sucesso ao cadastrar professor.", args: [JsonSerializer.Serialize(command), DateTime.Now, nameof(GetType)]);
+
                     return Ok();
                 }
+
+                _logger.LogError(message: "Ocorreu um erro ao cadastrar professor.", args: [JsonSerializer.Serialize(command), DateTime.Now, nameof(GetType)]);
 
                 return BadRequest(ObterMensagensErro());
             }
             catch (Exception ex)
             {
-                Console.Write($"Exception gerada: {ex.Message}");
+                _logger.LogCritical(exception: ex, message: "Ocorreu uma exceção ao cadastrar professor.", args: [DateTime.Now, nameof(GetType)]);
                 throw;
             }
         }
@@ -106,14 +120,18 @@ namespace GestaoAcademica.WebApi.Controllers
 
                 if (OperacaoValida())
                 {
+                    _logger.LogInformation(message: $"Sucesso ao atualizar professor.", args: [JsonSerializer.Serialize(command), DateTime.Now, nameof(GetType)]);
+
                     return Ok();
                 }
+
+                _logger.LogError(message: "Ocorreu um erro ao atualizar professor.", args: [JsonSerializer.Serialize(command), DateTime.Now, nameof(GetType)]);
 
                 return BadRequest(ObterMensagensErro());
             }
             catch (Exception ex)
             {
-                Console.Write($"Exception gerada: {ex.Message}");
+                _logger.LogCritical(exception: ex, message: "Ocorreu uma exceção ao atualizar professor.", args: [DateTime.Now, nameof(GetType)]);
                 throw;
             }
         }
@@ -129,14 +147,18 @@ namespace GestaoAcademica.WebApi.Controllers
 
                 if (OperacaoValida())
                 {
+                    _logger.LogInformation(message: $"Sucesso ao excluir professor.", args: [JsonSerializer.Serialize(command), DateTime.Now, nameof(GetType)]);
+
                     return Ok();
                 }
+
+                _logger.LogError(message: "Ocorreu um erro ao excluir professor.", args: [JsonSerializer.Serialize(command), DateTime.Now, nameof(GetType)]);
 
                 return BadRequest(ObterMensagensErro());
             }
             catch (Exception ex)
             {
-                Console.Write($"Exception gerada: {ex.Message}");
+                _logger.LogCritical(exception: ex, message: "Ocorreu uma exceção ao excluir professor.", args: [DateTime.Now, nameof(GetType)]);
                 throw;
             }
         }
