@@ -18,3 +18,6 @@ Tecnologias utilizadas neste projeto:
 
 ## Diagrama de Classes - Fluxo Matricular Aluno em Turma
 ![[alt text](artifacts/diagrama de classes.png "Diagrama de Classes")](https://raw.githubusercontent.com/vctr-moraes/GestaoAcademica/refs/heads/master/artifacts/diagrama%20de%20classes.png)
+
+## Super-Linter Badge
+[![Super-Linter](https://github.com/vctr-moraes/GestaoAcademica/actions/workflows/main.yml/badge.svg)](https://github.com/marketplace/actions/super-linter)
